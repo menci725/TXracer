@@ -2,25 +2,25 @@
 python3 generate_sequence.py benchmark/contracts/AbilityScores-0x41C54F3248947102a7D1125D264896dDc4727D25/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/AbilityScores-0x41C54F3248947102a7D1125D264896dDc4727D25/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/AbilityScores-0x41C54F3248947102a7D1125D264896dDc4727D25/flattened.sol AbilityScores 0.8.4 20  /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721 IERC721Enumerable Context ERC165 IERC721Metadata 
-solve
+ 
 
 python3 generate_sequence.py examples/simplerace.sol --solc /root/myenv/bin/solc
 python3 generate_config.py examples/simplerace.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py examples/simplerace.sol SimpleRace 0.8.0 20  /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json 
-solve
+ 
 
 2
 AbilityScores-0x42A87e04f87A038774fb39c0A61681e7e859937b
 python3 generate_sequence.py benchmark/contracts/AbilityScores-0x42A87e04f87A038774fb39c0A61681e7e859937b/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/AbilityScores-0x42A87e04f87A038774fb39c0A61681e7e859937b/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/AbilityScores-0x42A87e04f87A038774fb39c0A61681e7e859937b/flattened.sol AbilityScores 0.8.4 20  /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721 IERC721Enumerable Context ERC165 IERC721Metadata 
-solve
+ 
 
 3               
 python3 generate_sequence.py benchmark/contracts/AbilityScores-0x3213e943a875C7B943608e990A91924692AB7494/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/AbilityScores-0x3213e943a875C7B943608e990A91924692AB7494/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/AbilityScores-0x3213e943a875C7B943608e990A91924692AB7494/flattened.sol AbilityScores 0.8.4 20  /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721 IERC721Enumerable Context ERC165 IERC721 IERC721Metadata 
-solve
+ 
 
 4
 Adapter01-0x3A0430bF7cd2633af111ce3204DB4b0990857a6F
@@ -41,14 +41,14 @@ AnimeLoot-0x3D666422fFD721E3999395C2A25dC880D785a72a
 python3 generate_sequence.py benchmark/contracts/AnimeLoot-0x3D666422fFD721E3999395C2A25dC880D785a72a/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/AnimeLoot-0x3D666422fFD721E3999395C2A25dC880D785a72a/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/AnimeLoot-0x3D666422fFD721E3999395C2A25dC880D785a72a/flattened.sol AnimeLoot 0.8.1 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721 IERC721Enumerable Context ERC165 IERC721Metadata
-solve
+ 
 
 7
 ASH-0x64D91f12Ece7362F91A6f8E7940Cd55F05060b92
 python3 generate_sequence.py benchmark/contracts/ASH-0x64D91f12Ece7362F91A6f8E7940Cd55F05060b92/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/ASH-0x64D91f12Ece7362F91A6f8E7940Cd55F05060b92/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/ASH-0x64D91f12Ece7362F91A6f8E7940Cd55F05060b92/flattened.sol ASH 0.8.3 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts NFT2ERC20 ReentrancyGuard ERC20Burnable AdminControl INFT2ERC20 ERC20 Ownable IAdminControl Context IERC20
-solve
+ 
 
 
 8
@@ -56,14 +56,14 @@ BabyMutantApeClub-0xEBEF33391e1f23529e930F929954961c1f4ee900
 python3 generate_sequence.py benchmark/contracts/BabyMutantApeClub-0xEBEF33391e1f23529e930F929954961c1f4ee900/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/BabyMutantApeClub-0xEBEF33391e1f23529e930F929954961c1f4ee900/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/BabyMutantApeClub-0xEBEF33391e1f23529e930F929954961c1f4ee900/flattened.sol BabyMutantApeClub 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context IERC721Enumerable ERC721 IERC721Metadata IERC721 ERC165
-solve
+ 
 
 9
 beckLoot-0x86357A19E5537A8Fba9A004E555713BC943a66C0
 python3 generate_sequence.py benchmark/contracts/beckLoot-0x86357A19E5537A8Fba9A004E555713BC943a66C0/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/beckLoot-0x86357A19E5537A8Fba9A004E555713BC943a66C0/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/beckLoot-0x86357A19E5537A8Fba9A004E555713BC943a66C0/flattened.sol beckLoot 0.8.6 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context IERC721Enumerable ERC721 IERC721Metadata IERC721 ERC165 ReentrancyGuard
-solve
+ 
 
 10
 BetaRunnerUniswapV2-0x9136DfAc5435CD0bc627B9400415A19690134a63
@@ -75,7 +75,7 @@ interface
 183
 BetaRunnerUniswapV2-0x28130d2f98C3130A04D338Df6081Ef607664A0b9
 python3 generate_sequence.py benchmark/contracts/BetaRunnerUniswapV2-0x28130d2f98C3130A04D338Df6081Ef607664A0b9/flattened.sol --solc /root/myenv/bin/solc
-unsolve
+un 
 
 
 11
@@ -97,14 +97,14 @@ Bliomes-0x9fA0b8500e0E07b48094abD8B93248cf5A201516
 python3 generate_sequence.py benchmark/contracts/Bliomes-0x9fA0b8500e0E07b48094abD8B93248cf5A201516/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Bliomes-0x9fA0b8500e0E07b48094abD8B93248cf5A201516/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Bliomes-0x9fA0b8500e0E07b48094abD8B93248cf5A201516/flattened.sol Bliomes 0.8.6 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable Context ERC721 IERC721Enumerable
-solve
+ 
 
 14
 Bloot-0x4F8730E0b32B04beaa5757e5aea3aeF970E5B613
 python3 generate_sequence.py benchmark/contracts/Bloot-0x4F8730E0b32B04beaa5757e5aea3aeF970E5B613/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Bloot-0x4F8730E0b32B04beaa5757e5aea3aeF970E5B613/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Bloot-0x4F8730E0b32B04beaa5757e5aea3aeF970E5B613/flattened.sol Bloot 0.8.6 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable Context ERC721 IERC721Enumerable
-solve
+ 
 
 15
 Blootavatars-0xCE95fD8bA33DD1f394F17F5aD8100D4bc8daAA01
@@ -118,7 +118,7 @@ BlootDoggs-0xb2c02e550ad5845831D03aA38155FeE26931d33E
 python3 generate_sequence.py benchmark/contracts/BlootDoggs-0xb2c02e550ad5845831D03aA38155FeE26931d33E/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/BlootDoggs-0xb2c02e550ad5845831D03aA38155FeE26931d33E/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/BlootDoggs-0xb2c02e550ad5845831D03aA38155FeE26931d33E/flattened.sol BlootDoggs 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable Context ERC721 IERC721Enumerable
-solve
+ 
 
 187
 BlootElves-0x45c3844Dea2e9Fe9226524411DE6d907188A1a9F
@@ -132,14 +132,14 @@ BlootGirls-0x9fC1b82c8BA212b9B9620Da2cF36Cf5bE3d0082a
 python3 generate_sequence.py benchmark/contracts/BlootGirls-0x9fC1b82c8BA212b9B9620Da2cF36Cf5bE3d0082a/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/BlootGirls-0x9fC1b82c8BA212b9B9620Da2cF36Cf5bE3d0082a/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/BlootGirls-0x9fC1b82c8BA212b9B9620Da2cF36Cf5bE3d0082a/flattened.sol BlootGirls 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable Context ERC721 IERC721Enumerable
-solve
+ 
 
 18
 Card-0x329Fd5E0d9aAd262b13CA07C87d001bec716ED39
 python3 generate_sequence.py benchmark/contracts/Card-0x329Fd5E0d9aAd262b13CA07C87d001bec716ED39/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Card-0x329Fd5E0d9aAd262b13CA07C87d001bec716ED39/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Card-0x329Fd5E0d9aAd262b13CA07C87d001bec716ED39/flattened.sol Card 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable Context ERC721 IERC721Enumerable
-solve
+ 
 
 
 19
@@ -147,7 +147,7 @@ Char0-0xd44b96c6b4778cc652D91F1E4f1933517354FEBB
 python3 generate_sequence.py benchmark/contracts/Char0-0xd44b96c6b4778cc652D91F1E4f1933517354FEBB/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Char0-0xd44b96c6b4778cc652D91F1E4f1933517354FEBB/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Char0-0xd44b96c6b4778cc652D91F1E4f1933517354FEBB/flattened.sol Char0 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable Context ERC721 IERC721Enumerable
-solve
+ 
 
 20
 ClipperExchangeInterface-0x2e9c6Dcdca22A5952A88C4b18EDB5B54C5155BC9
@@ -163,7 +163,7 @@ Complexio-0x365495B661747d2F810524A0B6dD357566DE4e82
 python3 generate_sequence.py benchmark/contracts/Complexio-0x365495B661747d2F810524A0B6dD357566DE4e82/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Complexio-0x365495B661747d2F810524A0B6dD357566DE4e82/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Complexio-0x365495B661747d2F810524A0B6dD357566DE4e82/flattened.sol Complexio 0.8.10 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable 
-solve
+ 
 
 23
 ConvergentCurvePool-0x10a2F8bd81Ee2898D7eD18fb8f114034a549FA59
@@ -185,18 +185,18 @@ CroDefiSwapPair-0x3Aa370AacF4CB08C7E1E7AA8E8FF9418D73C7e0F
 python3 generate_sequence.py benchmark/contracts/CroDefiSwapPair-0x3Aa370AacF4CB08C7E1E7AA8E8FF9418D73C7e0F/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/CroDefiSwapPair-0x3Aa370AacF4CB08C7E1E7AA8E8FF9418D73C7e0F/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/CroDefiSwapPair-0x3Aa370AacF4CB08C7E1E7AA8E8FF9418D73C7e0F/flattened.sol CroDefiSwapPair 0.5.16 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts CroDefiSwapERC20 ICroDefiSwapPair 
-solve
+ 
 
 29
 CroDefiSwapRouter02-0xCeB90E4C17d626BE0fACd78b79c9c87d7ca181b3
-unsolve
+un 
 
 30
 CryptoPolz-0x9aA03df95b6D3c6edFb53c09A4A8473d0D642D32
 python3 generate_sequence.py benchmark/contracts/CryptoPolz-0x9aA03df95b6D3c6edFb53c09A4A8473d0D642D32/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/CryptoPolz-0x9aA03df95b6D3c6edFb53c09A4A8473d0D642D32/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/CryptoPolz-0x9aA03df95b6D3c6edFb53c09A4A8473d0D642D32/flattened.sol CryptoPolz 0.8.10 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable 
-solve
+ 
 
 
 31
@@ -204,28 +204,28 @@ CurrencyCats-0xe28edB4AB2fa90fa1f8198a83622B684dD8b9bEB
 python3 generate_sequence.py benchmark/contracts/CurrencyCats-0xe28edB4AB2fa90fa1f8198a83622B684dD8b9bEB/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/CurrencyCats-0xe28edB4AB2fa90fa1f8198a83622B684dD8b9bEB/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/CurrencyCats-0xe28edB4AB2fa90fa1f8198a83622B684dD8b9bEB/flattened.sol CurrencyCats 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable ERC721Burnable 
-solve
+ 
 
 32
 Curve-0x4F32Ab778e85C4aD0CEad54f8f82F5Ee74d46904
 python3 generate_sequence.py benchmark/contracts/Curve-0x4F32Ab778e85C4aD0CEad54f8f82F5Ee74d46904/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Curve-0x4F32Ab778e85C4aD0CEad54f8f82F5Ee74d46904/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Curve-0x4F32Ab778e85C4aD0CEad54f8f82F5Ee74d46904/flattened.sol Curve 0.5.0 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Ownable I_Curve Context 
-solve
+ 
 
 33
 Dai-0x6B175474E89094C44Da98b954EedeAC495271d0F
 python3 generate_sequence.py benchmark/contracts/Dai-0x6B175474E89094C44Da98b954EedeAC495271d0F/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Dai-0x6B175474E89094C44Da98b954EedeAC495271d0F/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Dai-0x6B175474E89094C44Da98b954EedeAC495271d0F/flattened.sol Dai 0.5.12 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts LibNote
-solve
+ 
 
 34
 Deed-0x09151aE179692894C931276d546CA5a2F1907326
 python3 generate_sequence.py benchmark/contracts/Deed-0x09151aE179692894C931276d546CA5a2F1907326/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Deed-0x09151aE179692894C931276d546CA5a2F1907326/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Deed-0x09151aE179692894C931276d546CA5a2F1907326/flattened.sol Deed 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable ReentrancyGuard
-solve
+ 
 
 35
 DeFiPlaza-0xE68c1d72340aEeFe5Be76eDa63AE2f4bc7514110
@@ -239,14 +239,14 @@ Dev-0x25ed58c027921E14D86380eA2646E3a1B5C55A8b
 python3 generate_sequence.py benchmark/contracts/Dev-0x25ed58c027921E14D86380eA2646E3a1B5C55A8b/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Dev-0x25ed58c027921E14D86380eA2646E3a1B5C55A8b/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Dev-0x25ed58c027921E14D86380eA2646E3a1B5C55A8b/flattened.sol Dev 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable ReentrancyGuard 
-solve
+ 
 
 37
 Dice-0x4Cec6Dca972BB810A1af1Ef3C8366B22b390c5Bc
 python3 generate_sequence.py benchmark/contracts/Dice-0x4Cec6Dca972BB810A1af1Ef3C8366B22b390c5Bc/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Dice-0x4Cec6Dca972BB810A1af1Ef3C8366B22b390c5Bc/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Dice-0x4Cec6Dca972BB810A1af1Ef3C8366B22b390c5Bc/flattened.sol Dice 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable ReentrancyGuard
-solve
+ 
 
 38
 discreetNFT-0x3c77065B584D4Af705B3E38CC35D336b081E4948
@@ -262,7 +262,7 @@ DMMPool-0xcE9874C42DcE7fffbE5E48B026Ff1182733266Cb
 python3 generate_sequence.py benchmark/contracts/DMMPool-0xcE9874C42DcE7fffbE5E48B026Ff1182733266Cb/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/DMMPool-0xcE9874C42DcE7fffbE5E48B026Ff1182733266Cb/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/DMMPool-0xcE9874C42DcE7fffbE5E48B026Ff1182733266Cb/flattened.sol DMMPool 0.6.12 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts IDMMPool  ERC20Permit  ReentrancyGuard  VolumeTrendRecorder
-solve
+ 
 
 40
 DMMRouter02-0x1c87257F5e8609940Bc751a07BB085Bb7f8cDBE6
@@ -283,7 +283,7 @@ DominionMintPass-0xD24cE68a9431aDf07e9865a2431cad33AAbA38c6
 python3 generate_sequence.py benchmark/contracts/DominionMintPass-0xD24cE68a9431aDf07e9865a2431cad33AAbA38c6/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/DominionMintPass-0xD24cE68a9431aDf07e9865a2431cad33AAbA38c6/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/DominionMintPass-0xD24cE68a9431aDf07e9865a2431cad33AAbA38c6/flattened.sol DominionMintPass 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable 
-solve
+ 
 
 
 43
@@ -291,7 +291,7 @@ DXswapPair-0xb0Dc4B36e0B4d2e3566D2328F6806EA0B76b4F13
 python3 generate_sequence.py benchmark/contracts/DXswapPair-0xb0Dc4B36e0B4d2e3566D2328F6806EA0B76b4F13/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/DXswapPair-0xb0Dc4B36e0B4d2e3566D2328F6806EA0B76b4F13/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/DXswapPair-0xb0Dc4B36e0B4d2e3566D2328F6806EA0B76b4F13/flattened.sol DXswapPair 0.5.16  20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts IDXswapPair DXswapERC20
-solve
+ 
 
 44
 EASContract-0x556d9E146CC7Fe7DF93fBdd90347Af8930acb104
@@ -305,7 +305,7 @@ emLoot-0x4335541D17f6344C29f2412E520Ed71639150EaD
 python3 generate_sequence.py benchmark/contracts/emLoot-0x4335541D17f6344C29f2412E520Ed71639150EaD/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/emLoot-0x4335541D17f6344C29f2412E520Ed71639150EaD/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/emLoot-0x4335541D17f6344C29f2412E520Ed71639150EaD/flattened.sol emLoot 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable 
-solve
+ 
 
 44
 ERC20-0x12D7B28a055621F4bA0C146d1728082eCF1B9390
@@ -327,21 +327,21 @@ EtherOrcs-0x7d9d3659dcfbea08a87777c52020BC672deece13
 python3 generate_sequence.py benchmark/contracts/EtherOrcs-0x7d9d3659dcfbea08a87777c52020BC672deece13/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/EtherOrcs-0x7d9d3659dcfbea08a87777c52020BC672deece13/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/EtherOrcs-0x7d9d3659dcfbea08a87777c52020BC672deece13/flattened.sol EtherOrcs 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 ERC721 ERC20
-unsolve
+un 
 
 47
 EToken2-0x331d077518216c07C87f4f18bA64cd384c411F84
 python3 generate_sequence.py benchmark/contracts/EToken2-0x331d077518216c07C87f4f18bA64cd384c411F84/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/EToken2-0x331d077518216c07C87f4f18bA64cd384c411F84/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/EToken2-0x331d077518216c07C87f4f18bA64cd384c411F84/flattened.sol EToken2 0.4.16 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Ambi2EnabledFull Ambi2Enabled Ambi2 Emitter Proxy
-solve
+ 
 
 48
 Exchange-0x715B4ce9adf91cC02C7c1D9c6E9001a1Bdd88BF8
 python3 generate_sequence.py benchmark/contracts/Exchange-0x715B4ce9adf91cC02C7c1D9c6E9001a1Bdd88BF8/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Exchange-0x715B4ce9adf91cC02C7c1D9c6E9001a1Bdd88BF8/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Exchange-0x715B4ce9adf91cC02C7c1D9c6E9001a1Bdd88BF8/flattened.sol Exchange 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ExchangeCore ReentrancyGuarded EIP712 Ownable AccessControl Farm Authorizeable Context IERC20 IERC20Metadata FarmV2 ERC20 ERC1155 MoneyHandler
-solve
+ 
 
 49
 ExchangeIssuance-0xc8C85A3b4d03FB3451e7248Ff94F780c92F884fD
@@ -362,7 +362,7 @@ extensionLoot-0x8bf2f876E2dCD2CAe9C3d272f325776c82DA366d
 python3 generate_sequence.py benchmark/contracts/extensionLoot-0x8bf2f876E2dCD2CAe9C3d272f325776c82DA366d/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/extensionLoot-0x8bf2f876E2dCD2CAe9C3d272f325776c82DA366d/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/extensionLoot-0x8bf2f876E2dCD2CAe9C3d272f325776c82DA366d/flattened.sol extensionLoot 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721 IERC721Enumerable Context ERC165 IERC721 IERC721Metadata IERC165
-solve
+ 
 
 52
 Facade-0xd56B5A63DAc64990e7eCcD046eC7119e38e422Dc
@@ -387,7 +387,7 @@ too large
 
 55
 Fewmans-0xAd5f6CDDa157694439EF9f6DD409424321C74628
-solve
+ 
 
 56
 FiatTokenV2_1-0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF
@@ -408,25 +408,25 @@ FPSLOOT-0x1642719FeF7Ff4BEc2eBc38f8B1380F3566F6459
 python3 generate_sequence.py benchmark/contracts/FPSLOOT-0x1642719FeF7Ff4BEc2eBc38f8B1380F3566F6459/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/FPSLOOT-0x1642719FeF7Ff4BEc2eBc38f8B1380F3566F6459/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/FPSLOOT-0x1642719FeF7Ff4BEc2eBc38f8B1380F3566F6459/flattened.sol FPSLOOT 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721
-solve
+ 
 
 59
 FreeMint-0x5506BE29aE429C7f70A4f5C926aF604899BbF692
 python3 generate_sequence.py benchmark/contracts/FreeMint-0x5506BE29aE429C7f70A4f5C926aF604899BbF692/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/FreeMint-0x5506BE29aE429C7f70A4f5C926aF604899BbF692/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/FreeMint-0x5506BE29aE429C7f70A4f5C926aF604899BbF692/flattened.sol FreeMint 0.8.10 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 Ownable Context ERC165 IERC721 IERC721Metadata 
-solve
+ 
 
 60
 Fuxi-0x22f26D7B074391C483a9952EF2E2b8F6B208D897
-solve
+ 
 
 61
 FYDai-0x9D7e85d095934471a2788F485A3c765d0A463bD7
 python3 generate_sequence.py benchmark/contracts/FYDai-0x9D7e85d095934471a2788F485A3c765d0A463bD7/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/FYDai-0x9D7e85d095934471a2788F485A3c765d0A463bD7/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/FYDai-0x9D7e85d095934471a2788F485A3c765d0A463bD7/flattened.sol FYDai 0.6.10 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts IFYDai Orchestrated Delegable DecimalMath ERC20Permit
-unsolve
+un 
 
 62
 GalacticFloppyDisk-0xdD0D63220265927b29646Cb7D4684D5Fa6dF4CB8
@@ -437,25 +437,25 @@ python3 evolutionary_sequencer.py benchmark/contracts/GalacticFloppyDisk-0xdD0D6
 
 63
 Gear-0xFf796cbbe32B2150A4585a3791CADb213D0F35A3
-solve
+ 
 
 64
 Glitch-0xf7e4601C0b30843e4d3D3a4286dF43c8188db009
-solve
+ 
 
 65
 GMContract-0xFB4ccb3e948FEd6946fC528bA806e737eDc938c4
 python3 generate_sequence.py benchmark/contracts/GMContract-0xFB4ccb3e948FEd6946fC528bA806e737eDc938c4/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/GMContract-0xFB4ccb3e948FEd6946fC528bA806e737eDc938c4/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/GMContract-0xFB4ccb3e948FEd6946fC528bA806e737eDc938c4/flattened.sol GMContract 0.8.10 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Ownable ERC721Enumerable Context ERC721 IERC721Enumerable
-solve
+ 
 
 66
 HappyLandGummyBears-0xf32e1bdE889eCf672FFAe863721C8f7d280F853b
 python3 generate_sequence.py benchmark/contracts/HappyLandGummyBears-0xf32e1bdE889eCf672FFAe863721C8f7d280F853b/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/HappyLandGummyBears-0xf32e1bdE889eCf672FFAe863721C8f7d280F853b/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/HappyLandGummyBears-0xf32e1bdE889eCf672FFAe863721C8f7d280F853b/flattened.sol HappyLandGummyBears 0.7.6 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Ownable Context ERC721 ERC165
-solve
+ 
 
 67
 HarvestSC-0x7621bb4825aCfFe11491B7a19A314B830e227959
@@ -487,7 +487,7 @@ InventoryNFT-0x0C20c04A60e8ebB844220C31C06CAF769968e1aB
 python3 generate_sequence.py benchmark/contracts/InventoryNFT-0x0C20c04A60e8ebB844220C31C06CAF769968e1aB/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/InventoryNFT-0x0C20c04A60e8ebB844220C31C06CAF769968e1aB/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/InventoryNFT-0x0C20c04A60e8ebB844220C31C06CAF769968e1aB/flattened.sol InventoryNFT 0.8.10 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable Ownable Context ERC721 IERC721Enumerable ERC165
-solve
+ 
 
 72
 Julia-0x6e845bE4ea601B4Dbe98ED1f52b371dca1Dbb2b6
@@ -515,18 +515,18 @@ ZeroExProxy-0xe66B31678d6C16E9ebf358268a790B763C133750
 python3 generate_sequence.py benchmark/contracts/ZeroExProxy-0xe66B31678d6C16E9ebf358268a790B763C133750/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/ZeroExProxy-0xe66B31678d6C16E9ebf358268a790B763C133750/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/ZeroExProxy-0xe66B31678d6C16E9ebf358268a790B763C133750/flattened.sol ZeroExProxy 0.6.12 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Ownable Context
-solve
+ 
 
 76
 XY-0x3CA53BE299C765cDC66cC1723F8B3EEFB3aAa413
 python3 generate_sequence.py benchmark/contracts/XY-0x3CA53BE299C765cDC66cC1723F8B3EEFB3aAa413/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/XY-0x3CA53BE299C765cDC66cC1723F8B3EEFB3aAa413/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/XY-0x3CA53BE299C765cDC66cC1723F8B3EEFB3aAa413/flattened.sol XY 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Tradable ReentrancyGuard ERC721Tradable  ERC721Enumerable  NativeMetaTransaction  Ownable ProxyRegistry OwnableDelegateProxy NativeMetaTransaction EIP712Base Initializable ContextMixin Context
-solve
+ 
 
 77
 xxxLoot-0xbA1C51e4d657ba7702f8523F435120A6fe79673b
-solve
+ 
 
 78
 WyvernExchange-0x7Be8076f4EA4A4AD08075C2508e481d6C946D12b
@@ -540,14 +540,14 @@ WizardSpell-0x38e942948Cea825992F105e0EC4A2ee9138AFaE4
 python3 generate_sequence.py benchmark/contracts/WizardSpell-0x38e942948Cea825992F105e0EC4A2ee9138AFaE4/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/WizardSpell-0x38e942948Cea825992F105e0EC4A2ee9138AFaE4/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/WizardSpell-0x38e942948Cea825992F105e0EC4A2ee9138AFaE4/flattened.sol WizardSpell 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721
-solve
+ 
 
 80
 WhalesGame-0x1Ebb218415B1f70aeFf54041c743082f183318cE
 python3 generate_sequence.py benchmark/contracts/WhalesGame-0x1Ebb218415B1f70aeFf54041c743082f183318cE/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/WhalesGame-0x1Ebb218415B1f70aeFf54041c743082f183318cE/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/WhalesGame-0x1Ebb218415B1f70aeFf54041c743082f183318cE/flattened.sol WhalesGame 0.8.10 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts StakingRewards KRILL 
-solve
+ 
 
 
 81
@@ -555,7 +555,7 @@ WETH9-0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
 python3 generate_sequence.py benchmark/contracts/WETH9-0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/WETH9-0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/WETH9-0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/flattened.sol WETH9 0.4.19 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json 
-solve
+ 
 
 82
 WeightedPool2Tokens-0xF4C0DD9B82DA36C07605df83c8a416F11724d88b
@@ -569,7 +569,7 @@ too large
 
 85
 vaultBox-0xab0b0dD7e4EaB0F9e31a539074a03f1C1Be80879
-solve
+ 
 
 86
 Vault-0xBA12222222228d8Ba445958a75a0704d566BF2C8
@@ -583,30 +583,30 @@ VariableDebtToken-0x99E81EDbcab512d393638C087fD29c3DC6c9B00E
 python3 generate_sequence.py benchmark/contracts/VariableDebtToken-0x99E81EDbcab512d393638C087fD29c3DC6c9B00E/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/VariableDebtToken-0x99E81EDbcab512d393638C087fD29c3DC6c9B00E/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/VariableDebtToken-0x99E81EDbcab512d393638C087fD29c3DC6c9B00E/flattened.sol VariableDebtToken 0.6.12 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Context IERC20 MockLendingPool MockUnderlyingAsset MockIncentivesController IAaveIncentivesController IERC20Detailed DebtTokenBase IVariableDebtToken IncentivizedERC20 VersionedInitializable  ICreditDelegationToken  IDebtTokenBase 
-solve
+ 
 
 88
 VariableDebtToken-0xDddE1FA049209Bc24B69D5fa316a56EfeC918D79
-solve
+ 
 
 89
 VariableDebtToken-0x52fdFB1157878f540DCB961561ce5F3b0bbe6f80
-solve
+ 
 
 90
 VariableDebtToken-0x3F87b818f94F3cC21e47FD3Bf015E8D8183A3E08
-solve
+ 
 
 91
 VariableDebtToken-0x1f57Cc62113C3a6346882DcF3Ed49120411ac2d2
-solve
+ 
 
 92
 UniswapV3Router-0x86d3579b043585A97532514016dCF0C2d6C4b6a1
 python3 generate_sequence.py benchmark/contracts/UniswapV3Router-0x86d3579b043585A97532514016dCF0C2d6C4b6a1/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/UniswapV3Router-0x86d3579b043585A97532514016dCF0C2d6C4b6a1/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/UniswapV3Router-0x86d3579b043585A97532514016dCF0C2d6C4b6a1/flattened.sol UniswapV3Router 0.7.5 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts IWETH IERC20
-unsolve
+un 
 
 185
 UniswapV2Pair-0x26aAd2da94C59524ac0D93F6D6Cbf9071d7086f2
@@ -637,21 +637,21 @@ UniBrightToken-0x8400D94A5cb0fa0D041a3788e395285d61c9ee5e
 python3 generate_sequence.py benchmark/contracts/UniBrightToken-0x8400D94A5cb0fa0D041a3788e395285d61c9ee5e/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/UniBrightToken-0x8400D94A5cb0fa0D041a3788e395285d61c9ee5e/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/UniBrightToken-0x8400D94A5cb0fa0D041a3788e395285d61c9ee5e/flattened.sol UniBrightToken 0.4.15 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts AssetProxy ERC20Interface AssetProxyInterface  Bytes32 ReturnData AssetInterface EToken2Interface RegistryICAPInterface 
-unsolve
+un 
 
 96
 UCube-0x4cBFC8772ee8d12cdd6007C9E4254AEB71214bab
 python3 generate_sequence.py benchmark/contracts/UCube-0x4cBFC8772ee8d12cdd6007C9E4254AEB71214bab/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/UCube-0x4cBFC8772ee8d12cdd6007C9E4254AEB71214bab/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/UCube-0x4cBFC8772ee8d12cdd6007C9E4254AEB71214bab/flattened.sol UCube 0.8.4 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Context Ownable ERC721 ERC165 IERC721 IERC721Metadata
-solve
+ 
 
 97
 Tunes-0xfa932d5cBbDC8f6Ed6D96Cc6513153aFa9b7487C
 python3 generate_sequence.py benchmark/contracts/Tunes-0xfa932d5cBbDC8f6Ed6D96Cc6513153aFa9b7487C/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Tunes-0xfa932d5cBbDC8f6Ed6D96Cc6513153aFa9b7487C/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Tunes-0xfa932d5cBbDC8f6Ed6D96Cc6513153aFa9b7487C/flattened.sol Tunes 0.8.2 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 ERC721URIStorage Ownable Context ERC165 IERC721 IERC721Metadata
-solve
+ 
 
 98
 TroveManager-0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2
@@ -662,11 +662,11 @@ too large
 
 99
 Treasure-0xf3DFbE887D81C442557f7a59e3a0aEcf5e39F6aa
-solve
+ 
 
 100
 TrashPandas-0x3c624857C4d3FCd693Fff925895BDfbE35Cc978f
-solve
+ 
 
 101
 TransactionManager-0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09
@@ -677,43 +677,43 @@ too large
 
 102
 TOOL-0x73C3E0D63a3bEAD7E58d82cd19D0e74589837DC2
-solve
+ 
 
 103
 TokenMintERC20Token-0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE
 python3 generate_sequence.py benchmark/contracts/TokenMintERC20Token-0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/TokenMintERC20Token-0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/TokenMintERC20Token-0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE/flattened.sol TokenMintERC20Token 0.5.0 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC20
-unsolve
+un 
 
 104
 Token-0x19062190B1925b5b6689D7073fDfC8c2976EF8Cb
 python3 generate_sequence.py benchmark/contracts/Token-0x19062190B1925b5b6689D7073fDfC8c2976EF8Cb/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Token-0x19062190B1925b5b6689D7073fDfC8c2976EF8Cb/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Token-0x19062190B1925b5b6689D7073fDfC8c2976EF8Cb/flattened.sol Token 0.5.0 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC20Detailed ERC20Capped ERC20Burnable 
-solve
+ 
 
 105
 THE90SLOOT-0xf102F6d0759B0cf6B5B61745ec51fc20F7F67A21
-solve
+ 
 
 106
 TFC-0x625D9e54d4346BC8c1b377e8bfCaBb64Bbb8dC89
 python3 generate_sequence.py benchmark/contracts/TFC-0x625D9e54d4346BC8c1b377e8bfCaBb64Bbb8dC89/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/TFC-0x625D9e54d4346BC8c1b377e8bfCaBb64Bbb8dC89/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/TFC-0x625D9e54d4346BC8c1b377e8bfCaBb64Bbb8dC89/flattened.sol TFC 0.8.9 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Delegated ERC721EnumerableB PaymentSplitter ERC721B IERC721Enumerable Context ERC165 IERC721 IERC721Metadata Ownable
-solve
+ 
 
 107
 TetherToken-0xdAC17F958D2ee523a2206206994597C13D831ec7
 python3 generate_sequence.py benchmark/contracts/TetherToken-0xdAC17F958D2ee523a2206206994597C13D831ec7/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/TetherToken-0xdAC17F958D2ee523a2206206994597C13D831ec7/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/TetherToken-0xdAC17F958D2ee523a2206206994597C13D831ec7/flattened.sol TetherToken 0.4.18 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Pausable StandardToken BlackList UpgradedStandardToken Ownable BasicToken ERC20
-solve 
+  
 
 108
 TemporalLoot-0x1dfe7Ca09e99d10835Bf73044a23B73Fc20623DF
-solve
+ 
 
 109
 Tellor-0x2754da26f634E04b26c4deCD27b3eb144Cf40582
@@ -727,14 +727,14 @@ SynCityPasses-0x6f24A2A5Ecfffb0610F69929e9AA7fceF441897a
 python3 generate_sequence.py benchmark/contracts/SynCityPasses-0x6f24A2A5Ecfffb0610F69929e9AA7fceF441897a/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/SynCityPasses-0x6f24A2A5Ecfffb0610F69929e9AA7fceF441897a/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/SynCityPasses-0x6f24A2A5Ecfffb0610F69929e9AA7fceF441897a/flattened.sol SynCityPasses 0.8.0 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 Ownable Context ERC165 IERC721 IERC721Metadata 
-solve 
+  
 
 111
 SyncFab-0x6710c63432A2De02954fc0f851db07146a6c0312
 python3 generate_sequence.py benchmark/contracts/SyncFab-0x6710c63432A2De02954fc0f851db07146a6c0312/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/SyncFab-0x6710c63432A2De02954fc0f851db07146a6c0312/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/SyncFab-0x6710c63432A2De02954fc0f851db07146a6c0312/flattened.sol SyncFab 0.4.15 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC20Interface AssetProxyInterface Bytes32 ReturnData AssetInterface EToken2Interface
-solve 
+  
 
 186
 UniswapV2Router-0x5172f0309CA013468c339Dc26Ab0a8095f87e26b
@@ -745,14 +745,14 @@ SwapsImplUniswapV2_ETH-0xE9d66DF4C7130e303c98b9d0e47725B5194FB672
 python3 generate_sequence.py benchmark/contracts/SwapsImplUniswapV2_ETH-0xE9d66DF4C7130e303c98b9d0e47725B5194FB672/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/SwapsImplUniswapV2_ETH-0xE9d66DF4C7130e303c98b9d0e47725B5194FB672/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/SwapsImplUniswapV2_ETH-0xE9d66DF4C7130e303c98b9d0e47725B5194FB672/flattened.sol SwapsImplUniswapV2_ETH 0.5.17 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts State ISwapsImpl Constants Objects ReentrancyGuard Ownable IWethERC20 IERC20
-solve 
+  
 
 113
 SwapRouter-0xE592427A0AEce92De3Edee1F18E0157C05861564
 python3 generate_sequence.py benchmark/contracts/SwapRouter-0xE592427A0AEce92De3Edee1F18E0157C05861564/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/SwapRouter-0xE592427A0AEce92De3Edee1F18E0157C05861564/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/SwapRouter-0xE592427A0AEce92De3Edee1F18E0157C05861564/flattened.sol SwapRouter 0.7.6 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ISwapRouter  PeripheryImmutableState  PeripheryValidation  PeripheryPaymentsWithFee  Multicall SelfPermit
-solve
+ 
 
 114
 SwapContract-0xb9a94be803eC1197A234406eF5c0113f503d3178
@@ -766,7 +766,7 @@ SVBloot-0x471E9CfcfB031B71813F0F7530696f41c09c4a9c
 python3 generate_sequence.py benchmark/contracts/SVBloot-0x471E9CfcfB031B71813F0F7530696f41c09c4a9c/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/SVBloot-0x471E9CfcfB031B71813F0F7530696f41c09c4a9c/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/SVBloot-0x471E9CfcfB031B71813F0F7530696f41c09c4a9c/flattened.sol SVBloot 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable
-solve
+ 
 
 116
 SushiSwapMultiExactSwapper-0xB527C5295c4Bc348cBb3a2E96B2494fD292075a7
@@ -787,7 +787,7 @@ SunflowerArt-0xD58434F33a20661f186ff67626ea6BDf41B80bCA
 python3 generate_sequence.py benchmark/contracts/SunflowerArt-0xD58434F33a20661f186ff67626ea6BDf41B80bCA/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/SunflowerArt-0xD58434F33a20661f186ff67626ea6BDf41B80bCA/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/SunflowerArt-0xD58434F33a20661f186ff67626ea6BDf41B80bCA/flattened.sol SunflowerArt 0.8.4 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Upgradeable ERC721EnumerableUpgradeable OwnableUpgradeable PausableUpgradeable 
-solve
+ 
 
 119
 SumswapV2Router02-0xd7b5d48d3e69e64850F7086d1c078A93FB909257
@@ -801,7 +801,7 @@ SumswapV2Pair-0x581473EFa76e547Bb9858b2034590B7716A6d27e
 python3 generate_sequence.py benchmark/contracts/SumswapV2Pair-0x581473EFa76e547Bb9858b2034590B7716A6d27e/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/SumswapV2Pair-0x581473EFa76e547Bb9858b2034590B7716A6d27e/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/SumswapV2Pair-0x581473EFa76e547Bb9858b2034590B7716A6d27e/flattened.sol SumswapV2Pair 0.6.12 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ISumiswapV2Pair
-solve
+ 
 
 121
 StandardPoolConverter-0x23d1b2755d6C243DFa9Dd06624f1686b9c9E13EB
@@ -812,7 +812,7 @@ too large
 
 122
 StageName-0x591E2B8C3d2c32D10B62ed04Ca20b88E9865Fd6D
-solve
+ 
 
 123
 StableDebtToken-0x9d4578c813D69745092a4F951753ed2B28056279
@@ -855,7 +855,7 @@ overtime
 
 129
 sLoot-0xb12F78434AE7D12Ae548c51A5cb734Ecc4536594
-solve
+ 
 
 130
 ShiryoinuAvatarsNFT-0x69e3fd31d528E6Ca6Cc6E5fF767138Decc073091
@@ -869,7 +869,7 @@ Settlements-0xdEcC60000ba66700a009b8F9F7D82676B5cfA88A
 python3 generate_sequence.py benchmark/contracts/Settlements-0xdEcC60000ba66700a009b8F9F7D82676B5cfA88A/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Settlements-0xdEcC60000ba66700a009b8F9F7D82676B5cfA88A/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Settlements-0xdEcC60000ba66700a009b8F9F7D82676B5cfA88A/flattened.sol Settlements 0.8.6 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 ERC721Enumerable ReentrancyGuard Ownable ERC721Burnable
-solve
+ 
 
 132
 SeasonFacet-0xE7F0C51d8FaF239a1CF65DB79E5e0fC64d148424
@@ -901,7 +901,7 @@ overtime
 
 136
 Root-0x348F071b5689C14c8eA916f3Ea483B89aD90eCe9
-solve
+ 
 
 137
 Role-0xCd4D337554862F9bC9ffffB67465B7d643E4E3ad
@@ -915,7 +915,7 @@ RedPanda-0x20eC51ce2B1fD7425521D6E916caFE9a0A91cEf5
 python3 generate_sequence.py benchmark/contracts/RedPanda-0x20eC51ce2B1fD7425521D6E916caFE9a0A91cEf5/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/RedPanda-0x20eC51ce2B1fD7425521D6E916caFE9a0A91cEf5/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/RedPanda-0x20eC51ce2B1fD7425521D6E916caFE9a0A91cEf5/flattened.sol RedPanda 0.8.4 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721
-solve
+ 
 
 139
 Quests-0x4de9d18Fd8390c12465bA3C6cc8032992fD7655d 
@@ -929,7 +929,7 @@ PuzlPackDeux-0x1F0Ad1F5280adF7AD971c0f911Cc1F7A882033C5
 python3 generate_sequence.py benchmark/contracts/PuzlPackDeux-0x1F0Ad1F5280adF7AD971c0f911Cc1F7A882033C5/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/PuzlPackDeux-0x1F0Ad1F5280adF7AD971c0f911Cc1F7A882033C5/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/PuzlPackDeux-0x1F0Ad1F5280adF7AD971c0f911Cc1F7A882033C5/flattened.sol PuzlPackDeux 0.8.4 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enum Ownable ReentrancyGuard
-solve
+ 
 
 141
 Pool-0x5591f644B377eD784e558D4BE1bbA78f5a26bdCd
@@ -957,7 +957,7 @@ pLoot-0x03Ea00B0619e19759eE7ba33E8EB8E914fbF52Ea
 python3 generate_sequence.py benchmark/contracts/pLoot-0x03Ea00B0619e19759eE7ba33E8EB8E914fbF52Ea/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/pLoot-0x03Ea00B0619e19759eE7ba33E8EB8E914fbF52Ea/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/pLoot-0x03Ea00B0619e19759eE7ba33E8EB8E914fbF52Ea/flattened.sol pLoot 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable
-solve
+ 
 
 145
 PlasmaswapRouter-0x5ec243F1F7ECFC137e98365C30c9A28691d86132
@@ -971,7 +971,7 @@ PlasmaswapPair-0xd615509464b0b55da297A6bCc86F306AE7D537FC
 python3 generate_sequence.py benchmark/contracts/PlasmaswapPair-0xd615509464b0b55da297A6bCc86F306AE7D537FC/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/PlasmaswapPair-0xd615509464b0b55da297A6bCc86F306AE7D537FC/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/PlasmaswapPair-0xd615509464b0b55da297A6bCc86F306AE7D537FC/flattened.sol PlasmaswapPair 0.5.16 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts IPlasmaswapPair PlasmaswapERC20
-solve
+ 
 
 
 147
@@ -993,7 +993,7 @@ OptionsManager-0x1BA4b447d0dF64DA64024e5Ec47dA94458C1e97f
 python3 generate_sequence.py benchmark/contracts/OptionsManager-0x1BA4b447d0dF64DA64024e5Ec47dA94458C1e97f/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/OptionsManager-0x1BA4b447d0dF64DA64024e5Ec47dA94458C1e97f/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/OptionsManager-0x1BA4b447d0dF64DA64024e5Ec47dA94458C1e97f/flattened.sol OptionsManager 0.8.6 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts IOptionsManager ERC721  AccessControl
-solve 
+  
 
 150
 OnChainSeasides-0xccB6E4a1c42F4892cdE27A8bC2e50bbA0b43d224
@@ -1014,21 +1014,21 @@ OnceUponATime-0x325EFAfe8F40F4aaF264eA0A213f0f0003256E4e
 python3 generate_sequence.py benchmark/contracts/OnceUponATime-0x325EFAfe8F40F4aaF264eA0A213f0f0003256E4e/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/OnceUponATime-0x325EFAfe8F40F4aaF264eA0A213f0f0003256E4e/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/OnceUponATime-0x325EFAfe8F40F4aaF264eA0A213f0f0003256E4e/flattened.sol OnceUponATime 0.8.0 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721
-solve
+ 
 
 153
 obsessionLoot-0xB5a9619b5BfE4e12ee2F5cB8249e8856c8911E3D
 python3 generate_sequence.py benchmark/contracts/obsessionLoot-0xB5a9619b5BfE4e12ee2F5cB8249e8856c8911E3D/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/obsessionLoot-0xB5a9619b5BfE4e12ee2F5cB8249e8856c8911E3D/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/obsessionLoot-0xB5a9619b5BfE4e12ee2F5cB8249e8856c8911E3D/flattened.sol obsessionLoot 0.8.5 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable ERC721
-solve
+ 
 
 154
 NonFungibleSoup-0xdc8bEd466ee117Ebff8Ee84896d6aCd42170d4bB
 python3 generate_sequence.py benchmark/contracts/NonFungibleSoup-0xdc8bEd466ee117Ebff8Ee84896d6aCd42170d4bB/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/NonFungibleSoup-0xdc8bEd466ee117Ebff8Ee84896d6aCd42170d4bB/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/NonFungibleSoup-0xdc8bEd466ee117Ebff8Ee84896d6aCd42170d4bB/flattened.sol NonFungibleSoup 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 ERC721Enumerable  ERC721URIStorage  Ownable
-solve
+ 
 
 155
 NFTWorlds-0xBD4455dA5929D5639EE098ABFaa3241e9ae111Af
@@ -1039,14 +1039,14 @@ too large
 
 156
 Name-0xb9310aF43F4763003F42661f6FC098428469aDAB
-solve
+ 
 
 157
 N-0x05a46f1E545526FB803FF974C790aCeA34D1f2D6
 python3 generate_sequence.py benchmark/contracts/N-0x05a46f1E545526FB803FF974C790aCeA34D1f2D6/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/N-0x05a46f1E545526FB803FF974C790aCeA34D1f2D6/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/N-0x05a46f1E545526FB803FF974C790aCeA34D1f2D6/flattened.sol N 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 ERC721Enumerable Ownable
-solve
+ 
 
 158
 MultiplexFeature-0x644E6ad1FE024d2b1e8a365BfB9D0086BD72Cd8e
@@ -1068,7 +1068,7 @@ tuple
 
 161
 MonsterSpawn-0xeCb9B2EA457740fBDe58c758E4C574834224413e
-solve
+ 
 
 162
 MonsterMobs-0x125Ecab9FdC132cAd4D6C055b9381AaD60efAF3D
@@ -1079,7 +1079,7 @@ Mondrian-0x7F81858eA3b43513AdFAF0A20DC7B4c6EbE72919
 python3 generate_sequence.py benchmark/contracts/Mondrian-0x7F81858eA3b43513AdFAF0A20DC7B4c6EbE72919/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Mondrian-0x7F81858eA3b43513AdFAF0A20DC7B4c6EbE72919/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Mondrian-0x7F81858eA3b43513AdFAF0A20DC7B4c6EbE72919/flattened.sol Mondrian 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 ERC721Enumerable ERC721URIStorage Ownable 
-solve
+ 
 
 164
 MineablePunks-0x595A8974C1473717c4B5D456350Cd594d9bdA687
@@ -1093,35 +1093,35 @@ MemeNumbers-0x98AFe7a8D28bBc88DCF41F8E06d97C74958A47dc
 python3 generate_sequence.py benchmark/contracts/MemeNumbers-0x98AFe7a8D28bBc88DCF41F8E06d97C74958A47dc/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/MemeNumbers-0x98AFe7a8D28bBc88DCF41F8E06d97C74958A47dc/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/MemeNumbers-0x98AFe7a8D28bBc88DCF41F8E06d97C74958A47dc/flattened.sol MemeNumbers 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721 Ownable
-solve
+ 
 
 166
 Members-0x3FE3D9Ef43611C89f2F5c491a9D1080629d455e8
 python3 generate_sequence.py benchmark/contracts/Members-0x3FE3D9Ef43611C89f2F5c491a9D1080629d455e8/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Members-0x3FE3D9Ef43611C89f2F5c491a9D1080629d455e8/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Members-0x3FE3D9Ef43611C89f2F5c491a9D1080629d455e8/flattened.sol Members 0.8.4 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts Ownable ERC721 
-solve
+ 
 
 167
 MegaToads-0xad5b089B89E8322c3BAF3A95852DB423a1C009b6
 python3 generate_sequence.py benchmark/contracts/MegaToads-0xad5b089B89E8322c3BAF3A95852DB423a1C009b6/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/MegaToads-0xad5b089B89E8322c3BAF3A95852DB423a1C009b6/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/MegaToads-0xad5b089B89E8322c3BAF3A95852DB423a1C009b6/flattened.sol MegaToads 0.8.6 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts  ERC721EnumerableUpgradeable OwnableUpgradeable ERC721Upgradeable
-solve
+ 
 
 168
 Map-0xD81f156bBF7043a22d4cE97C0E8ca11d3f4FB3cC
 python3 generate_sequence.py benchmark/contracts/Map-0xD81f156bBF7043a22d4cE97C0E8ca11d3f4FB3cC/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Map-0xD81f156bBF7043a22d4cE97C0E8ca11d3f4FB3cC/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Map-0xD81f156bBF7043a22d4cE97C0E8ca11d3f4FB3cC/flattened.sol Map 0.8.4 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable
-solve
+ 
 
 169
 LostPoetPages-0xA7206d878c5c3871826DfdB42191c49B1D11F466
 python3 generate_sequence.py benchmark/contracts/LostPoetPages-0xA7206d878c5c3871826DfdB42191c49B1D11F466/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/LostPoetPages-0xA7206d878c5c3871826DfdB42191c49B1D11F466/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/LostPoetPages-0xA7206d878c5c3871826DfdB42191c49B1D11F466/flattened.sol LostPoetPages 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ReentrancyGuard AdminControl ERC1155
-solve
+ 
 
 170
 Lore-0x32E58C6F1FF983924F385cE6aadF0595577beda1
@@ -1132,40 +1132,40 @@ too large
 
 171
 LootWeapon-0x0ac0ECc6D249F1383c5C7c2Ff4941Bd56DEcDd14
-solve
+ 
 
 172
 LootResources-0xCA590bE85A184B8ed837B28966602D543569e41f
-solve
+ 
 
 173
 LootPersonality-0x3b1bB53b1A42ff61B7399Fc196469A742cd3E98D
-solve
+ 
 
 174
 LootForCyberpunks-0x13a48f723f4AD29b6da6e7215Fe53172C027d98f
 python3 generate_sequence.py benchmark/contracts/LootForCyberpunks-0x13a48f723f4AD29b6da6e7215Fe53172C027d98f/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/LootForCyberpunks-0x13a48f723f4AD29b6da6e7215Fe53172C027d98f/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/LootResources-0xCA590bE85A184B8ed837B28966602D543569e41f/flattened.sol LootResources 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard Ownable
-solve
+ 
 
 175
 LootCreatures-0xB89A71F1abe992Dc71349FC782b393dA2b6FB4C2
 python3 generate_sequence.py benchmark/contracts/LootCreatures-0xB89A71F1abe992Dc71349FC782b393dA2b6FB4C2/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/LootCreatures-0xB89A71F1abe992Dc71349FC782b393dA2b6FB4C2/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/LootCreatures-0xB89A71F1abe992Dc71349FC782b393dA2b6FB4C2/flattened.sol LootCreatures 0.8.1 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ReentrancyGuard
-solve
+ 
 
 176
 Loot-0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7
-solve
+ 
 
 177
 Look-0xc97F4244839C13C6DF4258228C60488FA05C8528
 python3 generate_sequence.py benchmark/contracts/Look-0xc97F4244839C13C6DF4258228C60488FA05C8528/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/Look-0xc97F4244839C13C6DF4258228C60488FA05C8528/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/Look-0xc97F4244839C13C6DF4258228C60488FA05C8528/flattened.sol Look 0.8.7 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts ERC721Enumerable ERC721 IERC721Enumerable ReentrancyGuard
-solve
+ 
 
 178
 LoanClosings-0xF32099A9972D7a20D902cb787141F41D6150Afec
@@ -1196,7 +1196,7 @@ UniswapV3Feature-0x47F01db18a38261E4cB153bAe6db7d3743AcB33c
 python3 generate_sequence.py benchmark/contracts/UniswapV3Feature-0x47F01db18a38261E4cB153bAe6db7d3743AcB33c/flattened.sol --solc /root/myenv/bin/solc
 python3 generate_config.py benchmark/contracts/UniswapV3Feature-0x47F01db18a38261E4cB153bAe6db7d3743AcB33c/flattened.sol --solc /root/myenv/bin/solc
 python3 evolutionary_sequencer.py benchmark/contracts/UniswapV3Feature-0x47F01db18a38261E4cB153bAe6db7d3743AcB33c/flattened.sol UniswapV3Feature 0.6.12 20 /root/CrossFuzz/res.json /root/myenv/bin/solc 0 --constructor_config ./constructor_config.json --depend-contracts IFeature IUniswapV3Feature  FixinCommon  FixinTokenSpender 
-solve
+ 
 
 184
 Swap-0xBA12222222228d8Ba445958a75a0704d566BF2C8
@@ -1206,4 +1206,4 @@ python3 evolutionary_sequencer.py benchmark/contracts/Vault-0xBA12222222228d8Ba4
 
 185
 UniswapV3Feature-0x0D53497746e70c8Cc2E5e8D2AC5f0a33F93C9353
-solve
+ 
