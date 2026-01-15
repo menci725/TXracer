@@ -13,6 +13,31 @@ from fuzzer.utils.utils import initialize_logger
 
 
 class Individual():
+
+    # def __init__(self, generator, other_generators=None, frontrunning_mode=False):   #modify
+    #     self.logger = initialize_logger("Individual")
+    #     self.chromosome = []
+    #     self.solution = []
+    #     self.generator = generator
+    #     self.other_generators = other_generators if other_generators is not None else []
+    #     self.frontrunning_mode = frontrunning_mode  
+    
+    def decode(self):
+        print("--- Individual.decode() called ---") # 确认 decode 被调用
+        solution = []
+        for i in range(len(self.chromosome)):
+            # ...
+            # 找到 get_transaction_data_from_chromosome 的调用
+            # transaction["data"] = self.get_transaction_data_from_chromosome(i, o_g)
+            
+            # 在这之后打印生成的 transaction data
+            print(f"DEBUG [decode]: Gene {i} produced transaction data: {transaction['data']}")
+            
+            # ...
+        print(f"--- Individual.decode() finished, solution length: {len(solution)} ---")
+        return solution
+
+
     def __init__(self, generator, other_generators=None):
         self.logger = initialize_logger("Individual")
         self.chromosome = []
@@ -32,6 +57,26 @@ class Individual():
         self.chromosome = random.sample(self.chromosome, len(self.chromosome))
         self.solution = self.decode()
 
+
+    # def init(self, chromosome=None, single=False, func_hash=None, func_args_types=None, 
+    #      default_value=False, no_cross=False, frontrunning_mode=False):
+    #     if not chromosome:
+    #         if frontrunning_mode:
+    #             self.chromosome = self.generator.generate_frontrunning_sequence()
+    #             self.frontrunning_mode = True
+    #         elif settings.TRANS_MODE == "origin" or no_cross:
+    #             self.chromosome = self.generator.generate_random_individual(func_hash, func_args_types, default_value)
+    #         elif settings.TRANS_MODE == "cross" and single is False:
+    #             if len(settings.TRANS_CROSS_BAD_INDVS) > 0:
+    #                 self.chromosome = self.generator.generate_individual_by_cross()
+    #                 settings.CROSS_TRANS_EXEC_COUNT += 1
+    #         elif settings.TRANS_MODE == "cross" and single:
+    #             self.chromosome = self.generator.generate_random_individual(func_hash, func_args_types, default_value)
+    #     else:
+    #         self.chromosome = chromosome
+    #     self.solution = self.decode()
+    #     return self
+
     def init(self, chromosome=None, single=False, func_hash=None, func_args_types=None, default_value=False, no_cross=False):
         if not chromosome:
             if settings.TRANS_MODE == "origin" or no_cross:
@@ -50,6 +95,36 @@ class Individual():
     def create_cross_individual(self):
         pass
 
+    # def clone(self):
+    #     indv = self.__class__(generator=self.generator, 
+    #                         other_generators=self.other_generators,
+    #                         frontrunning_mode=self.frontrunning_mode)  # 保持前置运行模式
+    #     indv.init(chromosome=deepcopy(self.chromosome))
+    #     return indv
+    
+    # def is_frontrunning_individual(self):
+    #     """检查是否为前置运行测试个体"""
+    #     return self.frontrunning_mode
+
+    # def get_user_accounts(self):
+    #     """获取该个体中涉及的所有用户账户"""
+    #     users = set()
+    #     for transaction in self.chromosome:
+    #         users.add(transaction.get('account', ''))
+    #     return list(users)
+
+    # def get_function_calls_by_user(self):
+    #     """按用户分组获取函数调用"""
+    #     calls_by_user = {}
+    #     for transaction in self.chromosome:
+    #         user = transaction.get('account', '')
+    #         func_hash = transaction["arguments"][0]
+            
+    #         if user not in calls_by_user:
+    #             calls_by_user[user] = []
+    #         calls_by_user[user].append(func_hash)
+        
+    #     return calls_by_user
     def clone(self):
         indv = self.__class__(generator=self.generator, other_generators=self.other_generators)
         indv.init(chromosome=deepcopy(self.chromosome))

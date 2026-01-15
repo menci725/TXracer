@@ -146,11 +146,12 @@ class EvolutionaryFuzzingEngine(object):
             # Setup analysis objects.
             for a in self.analysis:
                 a.setup(ng=ng, engine=self)
-                a.register_step(g=-1, population=self.population, engine=self)
+                # a.register_step(g=-1, population=self.population, engine=self)   #modify
 
             # Enter evolution iteration.
             g = 0
             while g < ng or settings.GLOBAL_TIMEOUT:
+                print("Evolution iteration: ", g)
                 if settings.GLOBAL_TIMEOUT and time.time() - execution_begin >= settings.GLOBAL_TIMEOUT:
                     break
 

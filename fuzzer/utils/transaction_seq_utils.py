@@ -6,6 +6,7 @@ from slither import Slither
 from slither.core.declarations import FunctionContract
 
 from fuzzer.utils import settings
+from slither.core.declarations import Contract, Function
 
 DEBUG_MODE = False
 init = False  # 表示事务序列初始化
@@ -53,8 +54,40 @@ def extract_read_write_edge(contract, func, g):
         g.add_edge(contract.name + "." + func.name, contract.name + "." + sv_written.name, type="sv_written",
                    color="blue")
     for high_level_call in func.high_level_calls:  # 跨合约函数调用
-        g.add_edge(contract.name + "." + func.name, high_level_call[0].name + "." + high_level_call[1].name,
-                   type="external_call", color="green")
+        # g.add_edge(contract.name + "." + func.name, high_level_call[0].name + "." + high_level_call[1].name,
+        #            type="external_call", color="green")
+        try:
+            
+            # 1. 获取目标合约名
+            dest_contract_name = None
+            if isinstance(high_level_call[0], Contract):
+                dest_contract_name = high_level_call[0].name
+            elif isinstance(high_level_call[0], str):
+                dest_contract_name = high_level_call[0]
+            
+            # 2. 获取目标函数名
+            dest_func_name = None
+            if isinstance(high_level_call[1], Function):
+                dest_func_name = high_level_call[1].name
+            elif isinstance(high_level_call[1], str):
+                dest_func_name = high_level_call[1]
+
+            if dest_contract_name and dest_func_name:
+                # 3. 只有当成功提取出名字后，才添加边
+                g.add_edge(
+                    contract.name + "." + func.name,
+                    dest_contract_name + "." + dest_func_name,
+                    type="call"
+                )
+                # print(f"Add call edge {contract.name}.{func.name} -> {dest_contract_name}.{dest_func_name}")
+            else:
+                # print(f"DEBUG: Could not resolve high_level_call: {high_level_call}")
+                pass # 静默忽略无法解析的调用
+
+        except (IndexError, TypeError) as e:
+            # 增加一个额外的保护层，防止 high_level_call 的结构不是我们期望的元组
+            # print(f"DEBUG: Exception while processing high_level_call {high_level_call}: {e}")
+            continue
     for internal_call in func.internal_calls:  # 内部函数调用
         if isinstance(internal_call, FunctionContract):
             g.add_edge(contract.name + "." + func.name, contract.name + "." + internal_call.name, type="internal_call",
@@ -149,9 +182,9 @@ def init_func(sol_path):
             sv_other_func_read = has_data_info_func[other_func].get("read", set())
             if len(sv_func_write & sv_other_func_read) > 0:
                 base_pairs.append((func, sv_func_write & sv_other_func_read, other_func))
-    print("========base_pairs========")
-    for pair in base_pairs:
-        print(pair)
+    # print("========base_pairs========")
+    # for pair in base_pairs:
+    #     print(pair)
     for setter, sv_set, getter in base_pairs:
         setter_set = define_table.get(setter, set())
         setter_set.update(sv_set)
@@ -159,15 +192,15 @@ def init_func(sol_path):
         getter_set = use_table.get(getter, set())
         getter_set.update(sv_set)
         use_table[getter] = getter_set
-    print("========setter_table========")
-    for setter in define_table:
-        print(setter, define_table[setter])
-    print("========getter_table========")
-    for getter in use_table:
-        print(getter, use_table[getter])
-    print("========sv_prepare========")
-    for sv in sv_prepare:
-        print(sv)
+    # print("========setter_table========")
+    # for setter in define_table:
+    #     print(setter, define_table[setter])
+    # print("========getter_table========")
+    # for getter in use_table:
+    #     print(getter, use_table[getter])
+    # print("========sv_prepare========")
+    # for sv in sv_prepare:
+    #     print(sv)
     init = True
 
 

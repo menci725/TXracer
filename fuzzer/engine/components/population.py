@@ -3,7 +3,12 @@
 import random
 
 from fuzzer.utils import settings
+from fuzzer.engine.components.individual import Individual
 
+from eth_utils import to_canonical_address, function_signature_to_4byte_selector
+from fuzzer.utils import settings 
+from eth_abi import encode_abi
+from web3 import Web3
 
 class Individuals(object):
     '''
@@ -140,7 +145,9 @@ class Population(object):
             if len(indvs) != self.size:
                 raise ValueError('Invalid individuals number')
             for indv in indvs:
-                if not isinstance(indv, SessionIndividual):
+                # if not isinstance(indv, SessionIndividual):
+                #     raise ValueError('individual class must be Individual or a subclass of Individual')
+                if not isinstance(indv, Individual):                                                            #modify
                     raise ValueError('individual class must be Individual or a subclass of Individual')
             self.individuals = indvs
 
@@ -220,3 +227,125 @@ class Population(object):
         Get all fitness values in population.
         '''
         return [fitness(indv) for indv in self.individuals]
+    
+    # def init_from_template(self, sequence_template):
+    #     print(f"Initializing population from template using Generator's internal mappers...")
+    #     self.individuals = []
+        
+    #     IndvType = self.indv_template.__class__
+        
+    #     # 1. 创建 Generator 地图
+    #     generator_map = {self.indv_generator.contract_name: self.indv_generator}
+    #     for g in self.other_generators:
+    #         generator_map[g.contract_name] = g
+
+    #     # 2. 循环创建每一个 Individual
+    #     for _ in range(self.size):
+    #         new_indv = IndvType(generator=self.indv_generator, other_generators=self.other_generators)
+    #         new_chromosome = []
+            
+    #         for task in sequence_template:
+    #             target_contract_name = task.get('contract')
+    #             func_sig = task.get('signature')
+    #             if not target_contract_name or not func_sig: continue
+
+    #             target_generator = generator_map.get(target_contract_name)
+    #             if not target_generator:
+    #                 print(f"Could not find generator for '{target_contract_name}'. Skipping.")
+    #                 continue
+                
+    #             try:
+    #                 func_hash = target_generator.interface_mapper.get(func_sig)
+    #                 # print(f"  - Sig '{func_sig}' found in '{target_generator.contract_name}' interface_mapper")
+                    
+    #                 if not func_hash:
+    #                     # print(f"Sig '{func_sig}' not found in '{target_generator.contract_name}' interface_mapper. Skipping.")
+    #                     continue
+
+    #                 arg_types = target_generator.interface.get(func_hash, [])
+                    
+    #                 gene_list = target_generator.generate_individual(func_hash, arg_types)
+
+    #                 if gene_list:
+    #                     # forged_gene = gene_list[0]
+    #                     # print("\n" + "--- GENE FORGED ---")
+    #                     # print(f"  - Task       : {task['contract']}.{task['signature']}")
+    #                     # print(f"  - Using Gen  : {target_generator.contract_name}")
+    #                     # print(f"  - Target Addr: {forged_gene['contract']}")
+    #                     # print(f"  - Func Hash  : {forged_gene['arguments'][0]}")
+    #                     # print("-------------------")
+                        
+    #                     new_chromosome.extend(gene_list)
+
+    #             except Exception as e:
+    #                 print(f"Error forging gene for task '{task}': {e}")
+            
+    #         new_indv.init(chromosome=new_chromosome)
+    #         self.individuals.append(new_indv)
+
+    #     return self
+    def init_from_template(self, sequence_template):
+        print(f"Initializing population from template by manually forging genes...")
+        self.individuals = []
+        
+        IndvType = self.indv_template.__class__
+        generator_map = {self.indv_generator.contract_name: self.indv_generator}
+        for g in self.other_generators:
+            generator_map[g.contract_name] = g
+
+        for _ in range(self.size):
+            new_indv = IndvType(generator=self.indv_generator, other_generators=self.other_generators)
+            new_chromosome = []
+            
+            for task in sequence_template:
+                target_contract_name = task.get('contract')
+                func_sig = task.get('signature')
+                if not target_contract_name or not func_sig: continue
+
+                target_generator = generator_map.get(target_contract_name)
+                if not target_generator:
+                    print(f"Could not find generator for '{target_contract_name}'. Skipping.")
+                    continue
+                
+                try:
+                    # ===================================================================
+                    # !! 核心修改：不再调用 generate_individual，我们亲自锻造 !!
+                    # ===================================================================
+                    
+                    # 1. 查找函数哈希和参数类型
+                    func_hash, arg_types = target_generator.get_specific_function_with_argument_types(func_sig)
+                    
+                    # 2. 构建 arguments 列表
+                    arguments = [func_hash]
+                    for index, arg_type in enumerate(arg_types):
+                        # 调用 Generator 底层的、可靠的随机参数生成器
+                        arguments.append(target_generator.get_random_argument(arg_type, func_hash, index))
+                    
+                    # 3. 从全局“地址簿”中，获取正确的合约地址
+                    correct_contract_address = settings.DEPLOYED_CONTRACT_ADDRESS.get(target_contract_name)
+                    if not correct_contract_address:
+                        print(f"Could not find DEPLOYED address for '{target_contract_name}'. Skipping.")
+                        continue
+                    
+                    # 4. 构建完整的“基因”字典
+                    gene = {
+                        "account": target_generator.get_random_account(func_hash),
+                        "contract": correct_contract_address, # <-- 使用我们找到的、正确的地址！
+                        "amount": target_generator.get_random_amount(func_hash),
+                        "arguments": arguments,
+                        "blocknumber": target_generator.get_random_blocknumber(func_hash),
+                        "timestamp": target_generator.get_random_timestamp(func_hash),
+                        "gaslimit": target_generator.get_random_gaslimit(func_hash),
+                        "call_return": {}, "extcodesize": {}, "returndatasize": {}
+                    }
+                    new_chromosome.append(gene)
+
+                except KeyError:
+                    print(f"Sig '{func_sig}' not in '{target_generator.contract_name}' generator. Skipping.")
+                except Exception as e:
+                    print(f"Error forging gene for task '{task}': {e}")
+            
+            new_indv.init(chromosome=new_chromosome)
+            self.individuals.append(new_indv)
+        
+        return self

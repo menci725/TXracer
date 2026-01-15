@@ -9,6 +9,8 @@ from fuzzer.utils import settings
 from fuzzer.utils.transaction_seq_utils import gen_trans
 from fuzzer.utils.utils import *
 
+KNOWLEDGE_BASE_FILE = "knowledge_base.json"
+
 UINT_MAX = {
     1: int("0xff", 16),
     2: int("0xffff", 16),
@@ -155,8 +157,8 @@ class Generator:
 
     """
 
-    def __init__(self, interface, bytecode, accounts, contract, other_generators=None, interface_mapper=None,
-                 contract_name=None, sol_path=None):
+    def __init__(self, interface, bytecode, accounts, contract, abi, other_generators=None, interface_mapper=None,
+                 contract_name=None, sol_path=None,sequence_template=None):
         self.logger = initialize_logger("Generator")
         self.interface = interface
         self.interface_mapper = interface_mapper
@@ -164,6 +166,7 @@ class Generator:
         self.accounts = accounts
         self.contract = contract  # 合约部署的地址
         self.contract_name = contract_name  # 合约名称
+        self.abi = abi
         self.sol_path = sol_path  # 合约文件地址, 用于跨合约分析
         self.other_generators = other_generators if other_generators is not None else []  # type:List[Generator]
 
@@ -187,6 +190,57 @@ class Generator:
         self.total_interface_mapper = {self.contract_name: self.interface_mapper}
         for o_g in self.other_generators:
             self.total_interface_mapper[o_g.contract_name] = o_g.total_interface_mapper[o_g.contract_name]
+        
+        self.sequence_template = sequence_template
+        self.template_index = 0 # 用于追踪剧本的执行位置
+        if self.sequence_template:
+            print("Generator initialized in template-guided mode.")
+
+
+        self.logger.info(f"Generator for {self.contract_name} initializing...")
+        if os.path.exists(KNOWLEDGE_BASE_FILE):
+            self.logger.info(f"Found knowledge base. Pre-seeding parameter pools...")
+            try:
+                with open(KNOWLEDGE_BASE_FILE, 'r') as f:
+                    knowledge_base = json.load(f)
+                
+                # 只读取属于自己的那一章
+                my_chapter = knowledge_base.get(self.contract_name)
+                if my_chapter:
+                    self.logger.debug(f"Loading chapter '{self.contract_name}'...")
+                    for func_hash, params in my_chapter.items():
+                        for param_index, values in params.items():
+                            for value in values:
+                                # 在加载时，对大整数进行必要的类型转换
+                                final_value = value
+                                try:
+                                    # 这是一个简化的假设，更完整的实现会检查类型
+                                    final_value = int(value)
+                                except (ValueError, TypeError):
+                                    pass
+                                self.add_argument_to_pool(func_hash, int(param_index), final_value)
+                    self.logger.info("Parameter pools successfully pre-seeded.")
+            except Exception as e:
+                self.logger.error(f"Failed to load knowledge base: {e}")
+
+    def _load_global_seed_pool(self):
+        global_pool_path = "global_seed_pool.json"
+        if os.path.exists(global_pool_path):
+            self.logger.info(f"Loading knowledge from global seed pool: {global_pool_path}")
+            try:
+                with open(global_pool_path, 'r') as f:
+                    global_pool = json.load(f)
+                
+                # 将加载的种子，注入到自己的参数池中
+                # global_pool 的结构: { "function_hash": { "arg_index": [value1, value2] } }
+                for func_hash, args_data in global_pool.items():
+                    for arg_index, values in args_data.items():
+                        for value in values:
+                            # 注意：arg_index 需要是整数
+                            self.add_argument_to_pool(func_hash, int(arg_index), value)
+
+            except Exception as e:
+                self.logger.warning(f"Failed to load global seed pool: {e}")
 
     def update_other_generators(self, _other_generators, _total_interface_mapper):
         self.other_generators = _other_generators
@@ -328,10 +382,23 @@ class Generator:
         return input
 
     def get_random_function_with_argument_types(self):
-        function_hash = self.function_circular_buffer.head_and_rotate()
-        if function_hash == "constructor":
+        # if self.sequence_template:
+        #     target_sig = self.sequence_template[self.template_index]
+        #     self.template_index = (self.template_index + 1) % len(self.sequence_template)
+        #     try:
+        #         function_hash, argument_types = self.get_specific_function_with_argument_types(target_sig)
+        #         self.logger.debug(f"Template step {self.template_index}: Returning function '{target_sig}' ({function_hash})")
+        #         print(f"Template step {self.template_index}: Returning function '{target_sig}' ({function_hash})\n\n\n\n")
+        #         return function_hash, argument_types
+        #     except KeyError:
+        #         self.logger.error(f"FATAL: Signature '{target_sig}' from template not found in interface! Exiting.")
+        #         sys.exit(1)
+        # else:
+            # print("Generating with no templates\n\n\n")
             function_hash = self.function_circular_buffer.head_and_rotate()
-        return function_hash, self.interface[function_hash]
+            if function_hash == "constructor":
+                function_hash = self.function_circular_buffer.head_and_rotate()
+            return function_hash, self.interface[function_hash]
 
     def get_specific_function_with_argument_types(self, function_signature):
         return self.interface_mapper[function_signature], self.interface[self.interface_mapper[function_signature]]
@@ -560,20 +627,59 @@ class Generator:
     def get_random_amount_from_pool(self, function):
         return self.amounts_pool[function].head_and_rotate()
 
+    # def get_random_amount(self, function):
+    #     if function in self.amounts_pool:
+    #         amount = self.get_random_amount_from_pool(function)
+    #     else:
+    #         # # 原版get_random_amount
+    #         amount = random.randint(0,1)
+    #         self.add_amount_to_pool(function, amount)
+    #         self.add_amount_to_pool(function, 1 - amount)
+    #         # 为了覆盖ether级别金钱的情况, 上述情况最大为1wei
+    #         # if random.choice([True, True, False]):
+    #         #     for level, multiply in [("Ether", 10 ** 18), ("Wei", 1)]:
+    #         #         MAX_AMOUNT = 10 * multiply
+    #         #         amount = random.randint(0, MAX_AMOUNT)
+    #         #         self.add_amount_to_pool(function, amount)
+    #     return amount
+
     def get_random_amount(self, function):
-        if function in self.amounts_pool:
-            amount = self.get_random_amount_from_pool(function)
-        else:
-            # # 原版get_random_amount
-            amount = random.randint(0, 1)
-            self.add_amount_to_pool(function, amount)
-            self.add_amount_to_pool(function, 1 - amount)
-            # 为了覆盖ether级别金钱的情况, 上述情况最大为1wei
-            # if random.choice([True, True, False]):
-            #     for level, multiply in [("Ether", 10 ** 18), ("Wei", 1)]:
-            #         MAX_AMOUNT = 10 * multiply
-            #         amount = random.randint(0, MAX_AMOUNT)
-            #         self.add_amount_to_pool(function, amount)
+        if function in self.amounts_pool and not self.amounts_pool[function].empty:
+            return self.amounts_pool[function].head_and_rotate()
+        
+        common_values = [
+            0,                          # 最常见的非 payable 调用
+            1,                          # 最小的非零值
+        ]
+        
+        ether_values = [
+            10**18,                     # 1 Ether
+            10**17,                     # 0.1 Ether
+            5 * 10**17,                 # 0.5 Ether
+            Web3.toWei(1.1, 'ether'),   # 刚好大于 1 Ether
+            Web3.toWei(0.9, 'ether'),   # 刚好小于 1 Ether
+        ]
+        
+        if hasattr(settings, 'ACCOUNT_BALANCE'):
+            high_values = [
+                settings.ACCOUNT_BALANCE // 100, # 初始余额的 1%
+                settings.ACCOUNT_BALANCE // 10,  # 初始余额的 10%
+                settings.ACCOUNT_BALANCE // 2,   # 初始余额的一半
+                settings.ACCOUNT_BALANCE,        # 全部余额
+                settings.ACCOUNT_BALANCE + 1,    # 刚好超过余额
+            ]
+            common_values.extend(high_values)
+
+        common_values.extend(ether_values)
+        amount = random.choice(common_values)
+        if function not in self.amounts_pool:
+            self.amounts_pool[function] = CircularSet()
+        
+        self.amounts_pool[function].add(amount)
+        if amount > 0:
+            self.amounts_pool[function].add(amount - 1)
+        self.amounts_pool[function].add(amount + 1)
+            
         return amount
 
     #
@@ -642,9 +748,84 @@ class Generator:
                     del self.arguments_pool[function]
 
     def _get_random_argument_from_pool(self, function, argument_index):
+        print(f"function: {function}, argument_index: {self.arguments_pool[function][argument_index].head_and_rotate()}")
         return self.arguments_pool[function][argument_index].head_and_rotate()
 
+
+    
+    def _is_type_compatible(required_type, provided_type):
+    # 简化的兼容性检查
+        if required_type == provided_type:
+            return True
+        # 允许将一个更“大”的类型的值，用于一个更“小”的类型（需要范围检查）
+        if required_type.startswith('uint') and provided_type.startswith('uint'):
+            return True # 暂时允许所有 uint 互通，在后面进行范围检查
+        # ...
+        return False
+
     def get_random_argument(self, type, function, argument_index):
+        true_type = type
+        max_value = None
+        min_value = None
+        is_integer = False
+        # print(f"function: {function}, argument_index: {argument_index}, type: {type}")
+        try:
+            # 1. 在 ABI 中找到对应的函数定义
+            function_abi = next((item for item in self.abi if item.get('type') == 'function' and self.interface_mapper.get(item['name']+'(...)') == function), None)
+            
+            # 一个更简单的查找方式
+            func_sig = self.interface_mapper.get(function)
+            if func_sig:
+                # signature 是 "myFunc(uint128,address)"
+                # 我们需要找到 ABI 中 name 是 "myFunc" 的条目
+                func_name = func_sig.split('(')[0]
+                function_abi = next((item for item in self.abi if item.get('type') == 'function' and item.get('name') == func_name), None)
+                
+                if function_abi and 'inputs' in function_abi and len(function_abi['inputs']) > argument_index:
+                    # 2. 从 ABI 中，获取这个参数的、100%正确的真实类型！
+                    true_type = function_abi['inputs'][argument_index]['type']
+                    if true_type != type_from_interface:
+                        self.logger.debug(f"Type mismatch detected for {func_sig} arg {argument_index}. "
+                                          f"Interface said '{type_from_interface}', but ABI says '{true_type}'. Using ABI.")
+        except Exception as e:
+            self.logger.warning(f"Could not get true type from ABI for {function_hash}, falling back. Error: {e}")
+        
+        type = true_type
+
+        if function in self.arguments_pool and argument_index in self.arguments_pool[function] and \
+           not self.arguments_pool[function][argument_index].empty: # 确保池子不为空
+            
+            # ===================================================================
+            # !! 核心修改：使用 .head_and_rotate() 来安全地取值 
+            # ===================================================================
+            
+            # a. 先从池子里取出一个值
+            #    .head_and_rotate() 会返回一个值，并将指针移到下一个
+            #    这自带了我们想要的“多样性”，不再需要 shuffle
+            value_from_pool = self._get_random_argument_from_pool(function, argument_index)
+            
+            # b. !! 安全阀：对取出的值进行类型和范围检查 !!
+            #    (这部分逻辑与我们之前的最终版本完全相同)
+            if isinstance(value_from_pool, dict) and 'type' in value_from_pool:
+                # 这是我们带标签的“知识”
+                knowledge_type = value_from_pool['type']
+                knowledge_value = value_from_pool['value']
+                
+                if _is_type_compatible(type, knowledge_type):
+                    if type.startswith('uint'):
+                        try:
+                            bits = int(type.replace("uint", "").split("[")[0] or 256)
+                            max_value = (2 ** bits) - 1
+                            if 0 <= int(knowledge_value) <= max_value:
+                                return int(knowledge_value)
+                        except: pass
+                    else:
+                        return knowledge_value
+            else:
+                # (这里可以处理来自旧版 CrossFuzz 的、不带标签的值)
+                pass
+
+
         # Boolean
         if type.startswith("bool"):
             # Array
@@ -681,7 +862,21 @@ class Generator:
 
         # Unsigned integer
         elif type.startswith("uint"):
-            bytes = int(int(type.replace("uint", "").split("[")[0]) / 8)
+            # print(f"type: {type}")
+            # 1. 精确地提取位数
+            # 1. 使用正则表达式，精确地提取位数
+            match = re.search(r'\d+', type)
+            bits = int(match.group(0)) if match else 256
+            
+            if bits % 8 != 0 or bits > 256 or bits == 0: # 基本的健全性检查
+                self.logger.warning(f"Invalid bit size '{bits}' in type '{type}'. Defaulting to 256.")
+                bits = 256
+
+            # print(f"bits: {bits}")
+
+            # 2. 获取正确的最大/最小值
+            max_value = (2 ** bits) - 1
+            min_value = 0
             # Array
             if "[" in type and "]" in type:
                 sizes = self._get_array_sizes(argument_index, function, type)
@@ -690,21 +885,46 @@ class Generator:
                     if function in self.arguments_pool and argument_index in self.arguments_pool[function]:
                         array.append(self._get_random_argument_from_pool(function, argument_index))
                     else:
-                        array.append(self.get_random_unsigned_integer(0, UINT_MAX[bytes]))
+                        # 4. 使用正确的最大值来生成随机数！
+                        array.append(self.get_random_unsigned_integer(0, max_value))
                 if len(sizes) > 1:
                     new_array = []
                     for _ in range(sizes[1]):
                         new_array.append(array)
                     array = new_array
                 return array
-            # Single value
+            # Single value 
             else:
+                value_from_pool = None
+                # a. 优先尝试从池中取值
                 if function in self.arguments_pool and argument_index in self.arguments_pool[function]:
-                    return self._get_random_argument_from_pool(function, argument_index)
-                return self.get_random_unsigned_integer(0, UINT_MAX[bytes])  # 生成无符号整型
+                    value_from_pool = self._get_random_argument_from_pool(function, argument_index)
+
+                # b. !! 安全阀：检查池中取出的值是否合法 !!
+                if value_from_pool is not None:
+                    try:
+                        # 尝试将其转换为整数，并检查范围
+                        int_value = int(value_from_pool)
+                        if 0 <= int_value <= max_value:
+                            # 如果合法，就使用它
+                            return int_value
+                        else:
+                            # 如果不合法，就打印警告并抛弃它
+                            self.logger.warning(f"Value '{int_value}' from pool is out of range for type '{type}'. Discarding.")
+                    except (ValueError, TypeError):
+                        self.logger.warning(f"Value '{value_from_pool}' from pool is not a valid int for type '{type}'. Discarding.")
+                
+                # c. 如果池中没有值，或者值不合法，才进行随机生成
+                return self.get_random_unsigned_integer(0, max_value)
 
         # Signed integer
         elif type.startswith("int"):
+            try:
+                bits_str = type.replace("int", "").split("[")[0]
+                bits = int(bits_str) if bits_str else 256
+                bytes_len = bits // 8
+            except (ValueError, IndexError):
+                bytes_len = 32
             bytes = int(int(type.replace("int", "").split("[")[0]) / 8)
             # Array
             if "[" in type and "]" in type:
@@ -876,12 +1096,45 @@ class Generator:
 
     @staticmethod
     def get_random_unsigned_integer(min, max):
-        seed = int(random.uniform(-2, 2))
-        if seed == -1:
-            return random.choice([min, min + 1, min + 2])
-        elif seed == 1:
-            return random.choice([max, max - 1, max - 2])
-        else:
+        # seed = int(random.uniform(-2, 2))
+        # if seed == -1:
+        #     return random.choice([min, min + 1, min + 2])
+        # elif seed == 1:
+        #     return random.choice([max, max - 1, max - 2])
+        # else:
+        #     return random.randint(min, max)
+
+        # 1. 决定生成策略 (80%小数字, 15%边界值, 5%纯随机)
+        strategy = random.choices(
+            ['small_number', 'boundary_value', 'full_random'], 
+            weights=[100, 0, 0], 
+            k=1
+        )[0]
+
+        # print(f"strategy: {strategy}")
+
+        # 2. 根据策略生成值
+        if strategy == 'small_number':
+            # 在一个“合理”的上限内生成一个数。
+            # 我们可以假设大多数代币操作不会超过 1,000,000 * 10**18
+            reasonable_max = 10
+            # reasonable_max = 10**6 * 10**18 
+            # 确保我们的上限不超过该类型的最大值
+            if max > reasonable_max:
+                effective_max = reasonable_max
+            else:
+                effective_max = max
+            return random.randint(min, effective_max)
+
+        elif strategy == 'boundary_value':
+            # 返回一些经典的、有测试价值的边界值
+            boundary_values = {min, min + 1, max, max - 1}
+            # 过滤掉超出范围的值
+            valid_boundaries = [v for v in boundary_values if min <= v <= max]
+            return random.choice(valid_boundaries)
+
+        else: # full_random
+            # 保留原始的、完全随机的探索能力
             return random.randint(min, max)
 
     @staticmethod
@@ -904,3 +1157,33 @@ class Generator:
         随机获得length长度的字节序列
         """
         return bytearray(random.getrandbits(8) for _ in range(length))
+
+    def generate_individual_from_template(self, sequence_template):
+        """
+        根据一个函数签名模板，精确地构建一个完整的、带随机参数的 chromosome。
+        """
+        self.logger.info(f"Generating individual from template...")
+        new_chromosome = []
+        
+        # sequence_template 现在是一个对象列表
+        for task in sequence_template:
+            # ===================================================================
+            # !! 核心修改：从 task 字典中，提取出 'signature' 字符串 !!
+            # ===================================================================
+            func_sig = task['signature'] # <-- 我们需要的是这个字符串！
+            
+            try:
+                # 1. 使用已有的辅助函数，并传入正确的字符串签名
+                func_hash, arg_types = self.get_specific_function_with_argument_types(func_sig)
+                
+                # 2. 调用底层的 "gene" 锻造函数
+                gene_list = self.generate_individual(func_hash, arg_types)
+                if gene_list:
+                    # 3. 将锻造出的“基因”添加到我们的新 chromosome 中
+                    new_chromosome.extend(gene_list)
+            except KeyError:
+                self.logger.warning(f"Signature '{func_sig}' from template not found in interface. Skipping.")
+            except Exception as e:
+                self.logger.error(f"Error generating gene for template task '{task}': {e}")
+                
+        return new_chromosome

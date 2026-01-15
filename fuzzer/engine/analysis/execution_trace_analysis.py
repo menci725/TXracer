@@ -16,18 +16,20 @@ from eth._utils.address import force_bytes_to_address
 from eth_utils import to_hex, to_int, int_to_big_endian, encode_hex, ValidationError, to_canonical_address, \
     to_normalized_address
 
-from z3 import simplify, BitVec, BitVecVal, Not, Optimize, sat, unsat, unknown, is_expr
+from z3 import simplify, BitVec, BitVecVal, Not, Optimize, sat, unsat, unknown, is_expr, And
 from z3.z3util import get_vars
 
 from fuzzer.utils import settings
 import json
 
+KNOWLEDGE_BASE_FILE = "knowledge_base.json"
 
 class ExecutionTraceAnalyzer(OnTheFlyAnalysis):
     def __init__(self, fuzzing_environment: FuzzingEnvironment) -> None:
         self.logger = initialize_logger("Analysis")
         self.env = fuzzing_environment
         self.symbolic_execution_count = 0
+        self.stagnation_counter = 0
 
     def setup(self, ng, engine):
         pass
@@ -86,8 +88,12 @@ class ExecutionTraceAnalyzer(OnTheFlyAnalysis):
             "cross_transactions": settings.CROSS_TRANS_EXEC_COUNT
         })
 
-        if len(self.env.code_coverage) == self.env.previous_code_coverage_length:  # 如果这一次覆盖率没有增加, 启动符号执行
-            self.symbolic_execution(population.indv_generator, population.other_generators)
+        # if len(self.env.code_coverage) == self.env.previous_code_coverage_length:  # 如果这一次覆盖率没有增加, 启动符号执行
+        if 1 :  # 如果这一次覆盖率没有增加, 启动符号执行
+            print("symbolic execution")
+            self.requirement_driven_symbolic_execution(population.indv_generator,population.other_generators)
+
+            # self.symbolic_execution(population.indv_generator, population.other_generators)
             if self.symbolic_execution_count == settings.MAX_SYMBOLIC_EXECUTION:
                 del population.individuals[:]
                 population.init(no_cross=True)
@@ -154,6 +160,8 @@ class ExecutionTraceAnalyzer(OnTheFlyAnalysis):
             sha3 = {}
 
             for i, instruction in enumerate(result.trace):
+                # print("instruction: ", instruction["op"])
+
                 if settings.MAIN_CONTRACT_NAME != "" and settings.TRANS_INFO[settings.MAIN_CONTRACT_NAME] != \
                         test["transaction"]["to"]:
                     # 对于跨合约的情况, 暂时不统计其他合约
@@ -375,6 +383,33 @@ class ExecutionTraceAnalyzer(OnTheFlyAnalysis):
                     taint = BitVec("_".join(["caller", str(transaction_index)]), 256)
                     env.symbolic_taint_analyzer.introduce_taint(taint, instruction)
 
+                # elif instruction["op"] == "CALLDATALOAD":
+                #     input_index = convert_stack_value_to_int(instruction["stack"][-1])
+                #     if input_index > 0 and _function_hash in env.interface:
+                #         input_index = int((input_index - 4) / 32)
+                #         if input_index < len(env.interface[_function_hash]):
+                #             parameter_type = env.interface[_function_hash][input_index]
+                #             if '[' in parameter_type:
+                #                 array_size_index = convert_stack_value_to_int(result.trace[i + 1]["stack"][-1]) / 32
+                #                 _array_size_indexes[array_size_index] = input_index
+                #             elif "bytes" in parameter_type:
+                #                 pass
+                #             else:
+                #                 taint = BitVec("_".join(["calldataload",
+                #                                          str(transaction_index),
+                #                                          str(input_index)
+                #                                          ]), 256)
+                #                 env.symbolic_taint_analyzer.introduce_taint(taint, instruction)
+                #         else:
+                #             if input_index in _array_size_indexes:
+                #                 array_size = convert_stack_value_to_int(result.trace[i + 1]["stack"][-1])
+                #                 taint = BitVec("_".join(["inputarraysize",
+                #                                          str(transaction_index),
+                #                                          str(_array_size_indexes[input_index])
+                #                                          ]), 256)
+                #                 env.symbolic_taint_analyzer.introduce_taint(taint, instruction)
+                #             else:
+                #                 pass
                 elif instruction["op"] == "CALLDATALOAD":
                     input_index = convert_stack_value_to_int(instruction["stack"][-1])
                     if input_index > 0 and _function_hash in env.interface:
@@ -384,7 +419,7 @@ class ExecutionTraceAnalyzer(OnTheFlyAnalysis):
                             if '[' in parameter_type:
                                 array_size_index = convert_stack_value_to_int(result.trace[i + 1]["stack"][-1]) / 32
                                 _array_size_indexes[array_size_index] = input_index
-                            elif "bytes" in parameter_type:
+                            elif "bytes" in parameter_type or "string" in parameter_type:
                                 pass
                             else:
                                 taint = BitVec("_".join(["calldataload",
@@ -491,6 +526,8 @@ class ExecutionTraceAnalyzer(OnTheFlyAnalysis):
         env.symbolic_taint_analyzer.clear_storage()
         env.instrumented_evm.restore_from_snapshot()
 
+        # self.symbolic_execution(indv.generator, indv.other_generators)   #modify
+
     def get_coverage_with_children(self, children_code_coverage, code_coverage):
         code_coverage = len(code_coverage)
 
@@ -501,6 +538,9 @@ class ExecutionTraceAnalyzer(OnTheFlyAnalysis):
     def symbolic_execution(self, indv_generator, other_generators):
         if not self.env.args.constraint_solving:  # 是否启用符号执行模块
             return
+        
+
+        print("Symbolic Execution")
 
         for index, pc in enumerate(self.env.visited_branches):
             self.logger.debug("b(%d) pc : %s - visited branches : %s", index, pc, self.env.visited_branches[pc].keys())
@@ -821,6 +861,172 @@ class ExecutionTraceAnalyzer(OnTheFlyAnalysis):
         diff = list(set(self.env.code_coverage).symmetric_difference(set([hex(x) for x in self.env.overall_pcs])))
         self.logger.debug("Instructions not executed: %s", sorted(diff))
 
+
+    def requirement_driven_symbolic_execution(self, main_generator, other_generators):
+        if not self.env.args.constraint_solving: return
+
+        # 1. 在开头，构建完整的“将军名册” (Generator 地图)
+        all_generators_map = {main_generator.contract_name: main_generator}
+        for g in other_generators:
+            all_generators_map[g.contract_name] = g
+
+        # 遍历所有遇到过、但未能完全探索的 JUMPI 分支
+        for pc, branches in self.env.visited_branches.items():
+            if len(branches) != 1: continue
+
+            branch_data = next(iter(branches.values()))
+            path_constraints_list = branch_data.get("expression")
+            chromosome_from_branch = branch_data.get("chromosome")
+            if not path_constraints_list or not chromosome_from_branch: continue
+            
+            # 2. 将表达式列表组合成一个单一的表达式
+            full_path_constraint = And(path_constraints_list)
+            # 1. 传统路径导向
+            full_path_constraint = And(path_constraints_list)
+            unexplored_constraint = simplify(Not(path_constraints_list[-1]))
+            self.env.solver.reset()
+            self.env.solver.add(And(path_constraints_list[:-1]))
+            self.env.solver.add(unexplored_constraint)
+            
+            if self.env.solver.check() == sat:
+                model = self.env.solver.model()
+                # print(f"[*] Path-Constraint Solver found a model for unreachable branch at {pc}: {model}")
+                self._feed_model_to_pools(model, all_generators_map, chromosome_from_branch)
+
+            # 2. 主动推断收益最大化
+            storage_vars = [v for v in get_vars(full_path_constraint) if str(v).startswith("sload_")]
+            if not storage_vars: continue
+                
+            target_to_maximize = storage_vars[0]
+            opt = Optimize()
+            opt.add(full_path_constraint) # 直接添加组合后的表达式
+            opt.maximize(target_to_maximize)
+            
+            if opt.check() == sat:
+                model = opt.model()
+                # print(f"[*] Payoff-Maximization Solver found a model to maximize storage var {target_to_maximize} at {pc}: {model}")
+                self._feed_model_to_pools(model, all_generators_map, chromosome_from_branch)
+
+            
+    def _feed_model_to_pools(self, model, all_generators_map, chromosome):
+        """
+        一个清晰的“知识分发中心”。
+        """
+        self.logger.debug(f"Feeding new model to generator pools: {model}")
+
+        # 1. 预先加载知识库
+        knowledge_base = {}
+        if os.path.exists(KNOWLEDGE_BASE_FILE):
+            try:
+                with open(KNOWLEDGE_BASE_FILE, 'r') as f: knowledge_base = json.load(f)
+            except json.JSONDecodeError:
+                self.logger.warning("Knowledge base is corrupted. Starting fresh.")
+        knowledge_updated = False
+
+        # 2. 遍历 Z3 返回的所有“魔法”变量
+        for variable in model:
+            var_str = str(variable)
+            try:
+                var_split = var_str.split("_")
+                # 1. 用一种健壮的方式，解析所有可能的变量名格式
+                op_name = var_split[0]
+                transaction_index = int(var_split[1])
+                
+                # 2. 从 chromosome 中获取 ground truth
+                gene = chromosome[transaction_index]
+                function_hash = gene["arguments"][0]
+                target_address = gene['contract']
+                target_contract_name = next((name for name, addr in settings.DEPLOYED_CONTRACT_ADDRESS.items() if addr.lower() == target_address.lower()), None)
+                if not target_contract_name: continue
+                target_generator = all_generators_map.get(target_contract_name)
+                if not target_generator: continue
+
+                # 3. 分拣和派送
+                if op_name == "calldataload":
+                    parameter_index = int(var_split[2])
+                    
+                    # a. 从正确的 generator 的 interface 中，获取正确的参数类型
+                    arg_types = target_generator.interface.get(function_hash)
+                    if not arg_types or parameter_index >= len(arg_types): continue
+                    original_arg_type = arg_types[parameter_index]
+
+                    # b. 对 Z3 返回的 256位值，进行精确的范围约束
+                    value_from_z3 = model[variable].as_long()
+                    final_argument = None
+                    if 'uint' in original_arg_type:
+                        bits = 256; 
+                        try: bits = int(original_arg_type.replace("uint", ""))
+                        except ValueError: pass
+                        final_argument = value_from_z3 % (2**bits)
+                    elif 'address' in original_arg_type:
+                        final_argument = normalize_32_byte_hex_address(hex(value_from_z3 % (2**160)))
+                    # (可以添加对 int, bytesN, bool 的处理)
+                    else: continue
+                    
+                    if final_argument is not None:
+                        # e. 派送到本地邮箱 (当前 Generator)
+                        target_generator.add_argument_to_pool(function_hash, parameter_index, final_argument)
+                        
+                        contract_chapter = knowledge_base.setdefault(target_contract_name, {})
+                        func_pool = contract_chapter.setdefault(function_hash, {})
+                        param_pool = func_pool.setdefault(str(parameter_index), [])
+                        
+                        value_to_store = str(final_argument) if isinstance(final_argument, int) and final_argument > 2**64 else final_argument
+                        if value_to_store not in param_pool:
+                            param_pool.append(value_to_store)
+                            knowledge_updated = True
+                            self.logger.info(f"New knowledge for {target_contract_name}.{function_hash}, param #{parameter_index}: {final_argument}")
+
+
+                # --- B. 转账金额 (callvalue) ---
+                elif var_str.startswith("callvalue_"):
+                    new_amount = model[variable].as_long()
+                    if new_amount > settings.ACCOUNT_BALANCE: new_amount = settings.ACCOUNT_BALANCE
+                    
+                    target_generator.add_amount_to_pool(function_hash, new_amount)
+                    self.logger.info(f"Learned new MSG.VALUE for {target_contract_name}.{function_hash}: {new_amount}")
+
+                # --- C. 调用者地址 (caller) ---
+                elif var_str.startswith("caller_"):
+                    caller_as_long = model[variable].as_long()
+                    if caller_as_long > 0 and caller_as_long < 2**160:
+                        new_caller = normalize_32_byte_hex_address(hex(caller_as_long))
+                        
+                        # 在 EVM 中创建这个新账户
+                        if not self.env.instrumented_evm.has_account(new_caller):
+                            self.env.instrumented_evm.restore_from_snapshot()
+                            self.env.instrumented_evm.accounts.append(
+                                self.env.instrumented_evm.create_fake_account(new_caller)
+                            )
+                            self.env.instrumented_evm.create_snapshot()
+                        
+                        target_generator.add_account_to_pool(function_hash, new_caller)
+                        self.logger.info(f"Learned new MSG.SENDER for {target_contract_name}.{function_hash}: {new_caller}")
+
+                # --- D. 区块号 (blocknumber) ---
+                elif var_str.startswith("blocknumber_"):
+                    new_blocknumber = model[variable].as_long()
+                    target_generator.add_blocknumber_to_pool(function_hash, new_blocknumber)
+                    self.logger.info(f"Learned new BLOCK.NUMBER for {target_contract_name}.{function_hash}: {new_blocknumber}")
+
+                # --- E. 时间戳 (timestamp) ---
+                elif var_str.startswith("timestamp_"):
+                    new_timestamp = model[variable].as_long()
+                    target_generator.add_timestamp_to_pool(function_hash, new_timestamp)
+                    self.logger.info(f"Learned new BLOCK.TIMESTAMP for {target_contract_name}.{function_hash}: {new_timestamp}")
+
+            except (IndexError, ValueError, KeyError) as e:
+                self.logger.warning(f"Could not parse symbolic variable '{var_str}': {e}")
+                continue
+        
+        # 3. 如果知识库有更新，一次性写回文件
+        if knowledge_updated:
+            try:
+                with open(KNOWLEDGE_BASE_FILE, 'w') as f:
+                    json.dump(knowledge_base, f, indent=2)
+                self.logger.info(f"Knowledge base successfully updated.")
+            except Exception as e:
+                self.logger.error(f"Failed to write to knowledge base: {e}")
 
 def count_hash_4_chromosome(_chromosome: list):
     value = 0

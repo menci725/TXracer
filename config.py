@@ -5,7 +5,7 @@ loguru.logger.add("log/INFO.log", encoding="utf-8", enqueue=True, backtrace=True
 loguru.logger.add("log/ERROR.log", encoding="utf-8", enqueue=True, backtrace=True, diagnose=True, level="ERROR")
 loguru.logger.add("log/WARNING.log", encoding="utf-8", enqueue=True, backtrace=True, diagnose=True, level="WARNING")
 
-SOLC_BIN_PATH = "/usr/local/bin/solc"  # set to your solc path
+SOLC_BIN_PATH = "/root/myenv/bin/solc"  # set to your solc path
 
 
 ################

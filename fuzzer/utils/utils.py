@@ -164,14 +164,92 @@ def get_function_signature_mapping(abi):
         mapping["fallback"] = "fallback"
     return mapping
 
+# from web3 import Web3 # 确保导入
 
-def remove_swarm_hash(bytecode):
-    if isinstance(bytecode, str):
-        if bytecode.endswith("0029"):
-            bytecode = re.sub(r"a165627a7a72305820\S{64}0029$", "", bytecode)
-        if bytecode.endswith("0033"):
-            bytecode = re.sub(r"5056fe.*?0033$", "5056", bytecode)
-    return bytecode
+# def _get_canonical_abi_type(component):
+#     base_type = component['type']
+    
+#     if base_type.startswith('tuple'):
+#         # 如果是元组 (struct)，则递归地处理其内部组件，并用括号包裹
+#         internal_types = ",".join(_get_canonical_abi_type(c) for c in component.get('components', []))
+#         # 处理数组情况，例如 tuple[] -> (T1,T2)[]
+#         return f"({internal_types}){base_type.replace('tuple', '')}"
+    
+#     # 检查 internalType 是否明确指出了这是一个 contract 或 interface
+#     # 这是从 ABI 中获取语义信息的、更可靠的方式
+#     internal_type = component.get('internalType', '')
+#     if internal_type.startswith('contract ') or internal_type.startswith('interface '):
+#         # 如果是合约或接口类型，必须规范化为 address
+#         # 同时保留数组标记，例如 contract IMyContract[] -> address[]
+#         is_array = "[]" if "[]" in base_type else ""
+#         return 'address' + is_array
+        
+#     # 对于其他情况 (uint, string 等)，直接返回
+#     return base_type
+
+# def get_function_signature_mapping(abi):
+#     mapping = {} # { hash: signature }
+    
+#     for field in abi:
+#         if field.get('type') == 'function':
+#              try:
+#                 function_name = field['name']
+#                 # 使用我们的新辅助函数来正确地构建签名
+#                 input_types_str_list = [_get_canonical_abi_type(inp) for inp in field.get('inputs', [])]
+#                 signature = f"{function_name}({','.join(input_types_str_list)})"
+                
+#                 # 使用标准的 keccak 计算哈希
+#                 try:
+#                     hash_bytes = Web3.keccak(text=signature)
+#                 except TypeError: # 捕获 text= 不被支持的旧版本错误
+#                     hash_bytes = Web3.keccak(signature.encode('utf-8'))
+                
+#                 hash_hex = "0x" + hash_bytes[0:4].hex()
+                
+#                 mapping[hash_hex] = signature
+#              except Exception as e:
+#                 print(f"!! WARNING: Could not process ABI for function '{field.get('name')}': {e}")
+    
+#     return mapping
+
+# def remove_swarm_hash(bytecode):
+#     if isinstance(bytecode, str):
+#         if bytecode.endswith("0029"):
+#             bytecode = re.sub(r"a165627a7a72305820\S{64}0029$", "", bytecode)
+#         if bytecode.endswith("0033"):
+#             bytecode = re.sub(r"5056fe.*?0033$", "5056", bytecode)
+#     return bytecode
+
+def remove_swarm_hash(bytecode: str) -> str:
+    if not isinstance(bytecode, str):
+        return bytecode
+
+    try:
+        # 1. 获取末尾的 4 个十六进制字符 (2个字节)
+        metadata_length_hex = bytecode[-4:]
+        # 2. 将其转换为整数，这就是元数据部分的字节长度
+        metadata_length_bytes = int(metadata_length_hex, 16)
+        
+        # 3. 计算需要从十六进制字符串中移除的总字符数
+        #    (元数据本身 * 2 + 长度编码本身 * 2)
+        total_chars_to_remove = (metadata_length_bytes * 2) + 4
+        
+        # 4. 安全检查：确保要移除的长度不超过总长度
+        if total_chars_to_remove <= len(bytecode):
+            # 5. 精确地、外科手术式地切除元数据部分
+            clean_bytecode = bytecode[:-total_chars_to_remove]
+            # print(f"DEBUG: Successfully removed metadata of length {metadata_length_bytes} bytes.")
+            return clean_bytecode
+        else:
+            # 如果计算出的长度不合理，说明末尾的可能不是元数据
+            # print("DEBUG: Calculated metadata length is invalid. Returning original bytecode.")
+            return bytecode
+
+    except (ValueError, IndexError):
+        # 如果末尾的 4 个字符不是有效的十六进制，或者字节码太短，
+        # 那么它很可能不包含元数据。安全地返回原始字节码。
+        # print("DEBUG: No valid metadata length found at the end of bytecode.")
+        return bytecode
 
 
 def get_pcs_and_jumpis(bytecode):
